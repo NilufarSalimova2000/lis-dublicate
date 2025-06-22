@@ -1,0 +1,15 @@
+export enum Roles {
+  lis_warehouse_employee = 'warehouse employee',
+  lis_warehouse_supervisor = 'warehouse supervisor',
+  lis_administrator = 'administrator',
+  lis_cashier = 'cashier',
+  lis_selection_act = 'selection act',
+  lis_patient_legal = 'patient legal',
+  lis_registrar = 'registrar',
+  lis_patient = 'patient',
+  lis_local_monitoring = 'local monitoring',
+  lis_affirmatory = 'affirmatory',
+  lis_external_registrar = 'external registrar',
+  lis_labrant = 'laborant',
+  lis_nurse = 'nurse',
+}
