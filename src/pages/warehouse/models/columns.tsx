@@ -1,5 +1,5 @@
 import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { MenuIcon, Eye, Trash2, Pencil } from "lucide-react";
+import { MenuIcon, Eye } from "lucide-react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ReusableMenu } from "../../../ui/menu";
 import { ReusableDialog } from "../../../ui/dialog";
@@ -90,22 +90,6 @@ export const columnsWarehouse = ({
             onClick: () => {
               handleViewClick(row);
               handleCloseMenu();
-            },
-          },
-          {
-            icon: <Trash2 />,
-            label: "Delete",
-            onClick: () => {
-              console.log(row);
-              
-            },
-          },
-          {
-            icon: <Pencil />,
-            label: "Edit",
-            onClick: () => {
-              console.log(row);
-              
             },
           },
         ];

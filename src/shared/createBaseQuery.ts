@@ -29,7 +29,7 @@ const createBaseQueryWithAuth = (
       Cookies.remove("access_token");
       setTimeout(() => {
         window.location.href = "/login";
-      }, 3000);
+      }, 2000);
     }
     return result;
   };

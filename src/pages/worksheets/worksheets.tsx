@@ -1,19 +1,9 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, CircularProgress, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { organizationId } from "../../shared/constants";
 import { useToggle } from "../../hooks/useToggle";
 import { Table } from "../../ui/table";
-import { Search } from "lucide-react";
 import { colors } from "../../mui-config/colors";
-import { Link } from "react-router-dom";
 import { columnsWorksheets } from "./models/columns";
 import { useGetNurseTestTubeMutation } from "../../redux/services/lis/nurse-test-tube";
 
@@ -93,47 +83,6 @@ export const Worksheets = () => {
   return (
     <Box padding={{ sm: "28px", xs: "16px" }}>
       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"} padding={"16px"}>
-        <Stack
-          marginBottom={"20px"}
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <TextField
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            sx={{ maxWidth: "224px" }}
-            size="small"
-            placeholder="Search"
-          />
-          <Link style={{ textDecoration: "none" }} to={"/appointment/create"}>
-            <Button
-              sx={{ display: { xs: "none", sm: "block" } }}
-              variant="contained"
-            >
-              + Add
-            </Button>
-
-            <IconButton
-              sx={{
-                display: { xs: "flex", sm: "none" },
-                bgcolor: `${colors.primary}`,
-                width: "30px",
-                height: "30px",
-                borderRadius: "10px",
-              }}
-            >
-              +
-            </IconButton>
-          </Link>
-        </Stack>
         <Table
           columns={columns}
           rows={data?.data?.list || []}

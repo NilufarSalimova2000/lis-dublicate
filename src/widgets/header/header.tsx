@@ -15,9 +15,9 @@ export const Header = () => {
     "/users": "Employees",
     "/admission/patients": "Patients",
     "/admission/wfa": "Waiting for admission",
-    "/calendar": "Calendar",
+    "/nurse/patients": "Orders",
+    "/nurse/journal": "Nurse worksheets",
     "/warehouse": "Warehouse",
-    "/diary": "Diary",
     "/create": "Create user",
     "/appointment/create": "Create patient"
   };

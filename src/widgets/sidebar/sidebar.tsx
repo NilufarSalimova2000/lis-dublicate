@@ -1,113 +1,3 @@
-// import {
-//   Box,
-//   List,
-//   ListItem,
-//   ListItemButton,
-//   ListItemIcon,
-//   ListItemText,
-//   Stack,
-// } from "@mui/material";
-// import { colors } from "../../mui-config/colors";
-// import { NavLink } from "react-router-dom";
-// import Logo from "../../assets/images/Logo.svg";
-// import logoTablet from "../../assets/images/logo-tablet.svg";
-// import {
-//   LayoutDashboard,
-//   MessageCircleMore,
-//   NotebookText,
-//   Users,
-// } from "lucide-react";
-// import { Logout } from "../../components/logout";
-
-// export const navItems = [
-//   { icon: <LayoutDashboard />, label: "Dashboard", path: "/" },
-//   { icon: <Users />, label: "Employees", path: "/users" },
-//   { icon: <MessageCircleMore />, label: "Messages", path: "/messages" },
-//   { icon: <NotebookText />, label: "Diary", path: "/diary" },
-// ];
-
-// export const Sidebar = () => {
-//   return (
-//     <Box
-//       width={{ md: "250px", sm: "76px" }}
-//       bgcolor={colors.pureWhite}
-//       padding={"28px 20px"}
-//       height={"100vh"}
-//       overflow={"auto"}
-//       display="flex"
-//       flexDirection="column"
-//     >
-//       <Box mb={"28px"}>
-//         <Box display={{ md: "block", sm: "none" }}>
-//           <NavLink to={"/"}>
-//             <img src={Logo} alt="logo" />
-//           </NavLink>
-//         </Box>
-//         <Box display={{ md: "none", sm: "block" }}>
-//           <NavLink to={"/"}>
-//             <img src={logoTablet} alt="logo" />
-//           </NavLink>
-//         </Box>
-//       </Box>
-//       <Stack
-//         height={"100%"}
-//         direction={"column"}
-//         justifyContent={"space-between"}
-//       >
-//         <List>
-//           {navItems.map((item) => (
-//             <ListItem key={item.label} disablePadding>
-//               <ListItemButton
-//                 component={NavLink}
-//                 to={item.path}
-//                 sx={{
-//                   display: "flex",
-//                   alignItems: "center",
-//                   gap: { md: "12px" },
-//                   justifyContent: {
-//                     sm: "center",
-//                   },
-//                   "&.active": {
-//                     width: { sm: "34px" },
-//                     height: { sm: "34px" },
-//                     bgcolor: colors.primary,
-//                     color: colors.black,
-//                     borderRadius: "14px",
-//                   },
-//                   padding: { md: "10px 16px" },
-//                   marginBottom: "8px",
-//                   color: colors.gray20,
-//                 }}
-//               >
-//                 <ListItemIcon
-//                   sx={{
-//                     color: "inherit",
-//                     minWidth: "auto",
-//                     display: "flex",
-//                     alignItems: "center",
-//                     justifyContent: "center",
-//                     width: "20px",
-//                     height: "20px",
-//                   }}
-//                 >
-//                   {item.icon}
-//                 </ListItemIcon>
-
-//                 <ListItemText
-//                   sx={{ display: { xs: "none", md: "block" } }}
-//                   primary={item.label}
-//                   primaryTypographyProps={{ fontSize: "14px", fontWeight: 500 }}
-//                 />
-//               </ListItemButton>
-//             </ListItem>
-//           ))}
-//         </List>
-//         <Logout />
-//       </Stack>
-//     </Box>
-//   );
-// };
-
 import {
   Box,
   List,
@@ -129,7 +19,6 @@ import {
   Hospital,
   LayoutDashboard,
   ListIcon,
-  NotebookText,
   NotepadText,
   ShieldPlus,
   UserPlus,
@@ -169,7 +58,6 @@ export const navItems = [
       { icon: <ListIcon />, label: "List of products", path: "/warehouse" },
     ],
   },
-  { icon: <NotebookText />, label: "Diary", path: "/diary" },
 ];
 
 export const Sidebar = () => {
