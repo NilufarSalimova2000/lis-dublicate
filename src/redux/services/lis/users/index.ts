@@ -41,7 +41,7 @@ export const UsersService = createApi({
     }),
 
     getNurseTest: builder.mutation<
-      IBaseResponse<UsersType>,
+      UsersType[],
       { nurseTestId: number } & IPagination
     >({
       query: ({ nurseTestId, ...data }) => ({
@@ -57,4 +57,5 @@ export const {
   useGetUsersMutation,
   useGetPatientsMutation,
   useGetWfaPatientsMutation,
+  useGetNurseTestMutation
 } = UsersService;

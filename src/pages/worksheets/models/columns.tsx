@@ -14,6 +14,7 @@ interface ColumnsNurseWorksheets {
   openView: boolean;
   selectedRow: NurseTestTubeType | null;
   handleCloseView: () => void;
+  handleOpenPatientsModal: (id: number) => void;
 }
 
 export const columnsWorksheets = ({
@@ -25,6 +26,7 @@ export const columnsWorksheets = ({
   openView,
   selectedRow,
   handleCloseView,
+  handleOpenPatientsModal,
 }: ColumnsNurseWorksheets): GridColDef<NurseTestTubeType>[] => {
   return [
     {
@@ -71,9 +73,10 @@ export const columnsWorksheets = ({
             icon: <Users />,
             label: "Patients",
             onClick: () => {
-              console.log(row);
+              handleOpenPatientsModal(row.id); 
+              handleCloseMenu();
             },
-          },
+          }
         ];
 
         return (
@@ -139,7 +142,7 @@ export const columnsWorksheets = ({
                 }
                 showCancelButton
                 showConfirmButton={false}
-                cancelText="Yopish"
+                cancelText="Cancel"
               />
             )}
           </>

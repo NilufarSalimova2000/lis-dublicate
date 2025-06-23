@@ -6,6 +6,8 @@ import { Table } from "../../ui/table";
 import { colors } from "../../mui-config/colors";
 import { columnsWorksheets } from "./models/columns";
 import { useGetNurseTestTubeMutation } from "../../redux/services/lis/nurse-test-tube";
+import { ReusableDialog } from "../../ui/dialog";
+import { PatientsModalTable } from "../../components/patient-modal-table";
 
 export const Worksheets = () => {
   const [page, setPage] = useState(0);
@@ -32,6 +34,22 @@ export const Worksheets = () => {
     handleOpen: openViewDialog,
     handleClose: closeViewDialog,
   } = useToggle();
+
+  const {
+    open: openPatientsModal,
+    handleOpen: openPatientsModalOpen,
+    handleClose: closePatientsModal,
+  } = useToggle();
+
+  const [selectedPatientId, setSelectedPatientId] = useState<number | null>(
+    null
+  );
+
+  const handleOpenPatientsModal = (id: number) => {
+    setSelectedPatientId(id);
+    openPatientsModalOpen();
+    handleCloseMenu();
+  };
 
   const handleOpenMenu = (
     event: React.MouseEvent<HTMLElement>,
@@ -66,6 +84,7 @@ export const Worksheets = () => {
     openView,
     selectedRow,
     handleCloseView,
+    handleOpenPatientsModal,
   });
 
   if (isLoading) {
@@ -97,6 +116,21 @@ export const Worksheets = () => {
           pageSizeOptions={[5, 10, 20]}
         />
       </Stack>
+
+      {openPatientsModal && selectedPatientId && (
+        <ReusableDialog
+          width="1200px"
+          open={openPatientsModal}
+          onClose={() => {
+            closePatientsModal();
+            setSelectedPatientId(null);
+          }}
+          title="Patients"
+          description={<PatientsModalTable nurseTestId={selectedPatientId} />}
+          cancelText="Cancel"
+          showConfirmButton={false}
+        />
+      )}
     </Box>
   );
 };
