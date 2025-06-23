@@ -7,6 +7,8 @@ import {
   AnalyseResponseT,
   ApplicationType,
   BiomaterialType,
+  CreateInteriorNumberArgs,
+  CreateInteriorNumberResponse,
   LoincType,
 } from "../../../../shared/types/analyse";
 
@@ -85,6 +87,17 @@ export const AnalyseService = createApi({
         method: "DELETE",
       }),
     }),
+
+    createInteriorNumber: builder.mutation<
+      CreateInteriorNumberResponse,
+      CreateInteriorNumberArgs
+    >({
+      query: ({ userId, departmentId, internalNumber }) => ({
+        url: `analyse/nurse-internal-number/${userId}`,
+        method: "POST",
+        params: { departmentId, internalNumber },
+      }),
+    }),
   }),
 });
 
@@ -97,4 +110,5 @@ export const {
   useGetLoincQuery,
   useGetMeasurementUnitQuery,
   useGetPatientAnalyseMutation,
+  useCreateInteriorNumberMutation,
 } = AnalyseService;

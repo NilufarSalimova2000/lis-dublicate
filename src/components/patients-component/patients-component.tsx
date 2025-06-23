@@ -6,6 +6,7 @@ import {
   InputAdornment,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useGetPatientsMutation } from "../../redux/services/lis/users";
@@ -18,6 +19,14 @@ import { colors } from "../../mui-config/colors";
 import { Link } from "react-router-dom";
 import { ReusableDialog } from "../../ui/dialog";
 import { NurseSheetForm } from "../nurse-sheet-form";
+import { UsersType } from "../../shared/types/users";
+import { toast } from "react-toastify";
+import { useCreateInteriorNumberMutation } from "../../redux/services/lis/analyse";
+import { useForm } from "react-hook-form";
+
+interface InteriorNumberFormValues {
+  number: string;
+}
 
 export const PatientsComponent = () => {
   const [page, setPage] = useState(0);
@@ -26,7 +35,7 @@ export const PatientsComponent = () => {
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
   const [getPatients, { data, isLoading, error }] = useGetPatientsMutation();
-  const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<UsersType[]>([]);
 
   useEffect(() => {
     if (organizationId !== null) {
@@ -51,6 +60,14 @@ export const PatientsComponent = () => {
     handleClose: closeNurseSheetModal,
   } = useToggle();
 
+  const {
+    open: openInteriorModal,
+    handleOpen: openInteriorOpen,
+    handleClose: closeInteriorModal,
+  } = useToggle();
+
+  const [currentPatient, setCurrentPatient] = useState<UsersType | null>(null);
+
   const handleOpenMenu = (
     event: React.MouseEvent<HTMLElement>,
     rowId: number
@@ -64,7 +81,7 @@ export const PatientsComponent = () => {
     setMenuRowId(null);
   };
 
-  const handleViewClick = (row: any) => {
+  const handleViewClick = (row: UsersType) => {
     setSelectedRow(row);
     openViewDialog();
     handleCloseMenu();
@@ -73,6 +90,35 @@ export const PatientsComponent = () => {
   const handleCloseView = () => {
     closeViewDialog();
     setSelectedRow(null);
+  };
+
+  const handleOpenInteriorModal = (row: UsersType) => {
+    setCurrentPatient(row);
+    openInteriorOpen();
+  };
+
+  const [createInteriorNumber] = useCreateInteriorNumberMutation();
+  const { register, handleSubmit, reset } = useForm<InteriorNumberFormValues>();
+
+  const handleSubmitInteriorNumber = async (data: InteriorNumberFormValues) => {
+    if (!currentPatient) return;
+    try {
+      if (!organizationId) {
+        toast.error("Tashkilot ID mavjud emas");
+        return;
+      }
+      const res = await createInteriorNumber({
+        userId: currentPatient.id,
+        departmentId: organizationId,
+        internalNumber: data.number,
+      }).unwrap();
+
+      toast.success(`Qo‘shildi: ${res.number}`);
+      closeInteriorModal();
+      setSelectedRow(null);
+    } catch (error) {
+      toast.error("Qo‘shishda xatolik yuz berdi");
+    }
   };
 
   const columns = columnsPatient({
@@ -84,6 +130,7 @@ export const PatientsComponent = () => {
     openView,
     selectedRow,
     handleCloseView,
+    handleOpenInteriorModal,
   });
 
   if (isLoading) {
@@ -183,6 +230,41 @@ export const PatientsComponent = () => {
         width={500}
         showConfirmButton={false}
         cancelText="Bekor qilish"
+      />
+
+      <ReusableDialog
+        open={openInteriorModal}
+        onClose={() => {
+          closeInteriorModal();
+          setCurrentPatient(null);
+          reset();
+        }}
+        title="Assign interior number"
+        width={400}
+        description={
+          <Box
+            component="form"
+            onSubmit={handleSubmit(handleSubmitInteriorNumber)}
+          >
+            <Stack spacing={2}>
+              <Typography>
+                {currentPatient?.lastName} {currentPatient?.firstName} uchun
+                yangi nurse interior number kiriting:
+              </Typography>
+              <TextField
+                size="small"
+                placeholder="Interior number"
+                fullWidth
+                {...register("number", { required: true })}
+              />
+              <Button type="submit" variant="contained">
+                Saqlash
+              </Button>
+            </Stack>
+          </Box>
+        }
+        showCancelButton={false}
+        showConfirmButton={false}
       />
     </Box>
   );

@@ -1,10 +1,11 @@
 import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { MenuIcon, Eye } from "lucide-react";
+import { MenuIcon, Eye, FileDigit } from "lucide-react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ReusableMenu } from "../../../ui/menu";
 import { UsersType } from "../../../shared/types/users";
 import { ReusableDialog } from "../../../ui/dialog";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 interface ColumnsPatientProps {
   anchorEl: HTMLElement | null;
@@ -15,6 +16,7 @@ interface ColumnsPatientProps {
   openView: boolean;
   selectedRow: UsersType | null;
   handleCloseView: () => void;
+  handleOpenInteriorModal: (row: UsersType) => void;
 }
 
 export const columnsPatient = ({
@@ -26,6 +28,7 @@ export const columnsPatient = ({
   openView,
   selectedRow,
   handleCloseView,
+  handleOpenInteriorModal,
 }: ColumnsPatientProps): GridColDef<UsersType>[] => {
   return [
     {
@@ -98,9 +101,21 @@ export const columnsPatient = ({
         const menuItems = [
           {
             icon: <Eye />,
-            label: "Batafsil",
+            label: "View",
             onClick: () => {
               handleViewClick(row);
+              handleCloseMenu();
+            },
+          },
+          {
+            icon: <FileDigit />,
+            label: "Nurse interior number",
+            onClick: () => {
+              if (row.nurseInteriorNumber) {
+                toast.info(`Interior number: ${row.nurseInteriorNumber}`);
+              } else {
+                handleOpenInteriorModal(row);
+              }
               handleCloseMenu();
             },
           },

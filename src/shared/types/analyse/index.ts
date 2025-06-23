@@ -188,3 +188,14 @@ export interface AnalyseType {
   viewType: any
   typeBiomaterial: any
 }
+
+export interface CreateInteriorNumberArgs {
+  userId: number;
+  departmentId: number;
+  internalNumber: string;
+}
+
+export interface CreateInteriorNumberResponse {
+  id: number;
+  number: string;
+}
