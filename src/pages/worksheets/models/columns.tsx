@@ -1,5 +1,5 @@
 import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { MenuIcon, Eye, Trash2, Pencil } from "lucide-react";
+import { MenuIcon, Eye, Users } from "lucide-react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ReusableMenu } from "../../../ui/menu";
 import { ReusableDialog } from "../../../ui/dialog";
@@ -68,15 +68,8 @@ export const columnsWorksheets = ({
             },
           },
           {
-            icon: <Trash2 />,
-            label: "Delete",
-            onClick: () => {
-              console.log(row);
-            },
-          },
-          {
-            icon: <Pencil />,
-            label: "Edit",
+            icon: <Users />,
+            label: "Patients",
             onClick: () => {
               console.log(row);
             },
@@ -121,9 +114,24 @@ export const columnsWorksheets = ({
                         gap="5px"
                         variant="h6"
                       >
-                        Item description:{" "}
+                        Description:{" "}
                         <Typography variant="body1">
                           {selectedRow.description || "-"}
+                        </Typography>
+                      </Typography>
+                      <Typography
+                        display="flex"
+                        alignItems={"center"}
+                        gap="5px"
+                        variant="h6"
+                      >
+                        Types of analysis:{" "}
+                        <Typography variant="body1">
+                          {selectedRow.analyseType.length > 0
+                            ? selectedRow.analyseType
+                                .map((a) => a.nameUz)
+                                .join(", ")
+                            : "-"}
                         </Typography>
                       </Typography>
                     </Box>

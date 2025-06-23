@@ -39,6 +39,17 @@ export const UsersService = createApi({
         body: { ...data },
       }),
     }),
+
+    getNurseTest: builder.mutation<
+      IBaseResponse<UsersType>,
+      { nurseTestId: number } & IPagination
+    >({
+      query: ({ nurseTestId, ...data }) => ({
+        url: `user/list-search-by-nurse-test/${nurseTestId ?? 1}`,
+        method: "POST",
+        body: { ...data },
+      }),
+    }),
   }),
 });
 
