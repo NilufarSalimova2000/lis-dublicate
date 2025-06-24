@@ -7,6 +7,7 @@ import { WFA } from "../pages/waiting-for-admission";
 import { Warehouse } from "../pages/warehouse";
 import { CreateUser } from "../pages/create-user";
 import { CreatePatients } from "../pages/create-patients";
+import { PatientDetail } from "../pages/patient-detail";
 
 interface Type {
     id: string,
@@ -58,5 +59,10 @@ export const Router: Type[] = [
         id: nanoid(),
         path: "/appointment/create",
         component: CreatePatients
+    },
+    {
+        id: nanoid(),
+        path: "/appointment/detail/:id",
+        component: PatientDetail
     }
 ]

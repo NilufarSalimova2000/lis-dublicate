@@ -50,6 +50,10 @@ export const UsersService = createApi({
         body: { ...data },
       }),
     }),
+
+    getPatient: builder.query<UsersType, number>({
+      query: (id) => `/user/${id}`,
+    }),
   }),
 });
 
@@ -57,5 +61,6 @@ export const {
   useGetUsersMutation,
   useGetPatientsMutation,
   useGetWfaPatientsMutation,
-  useGetNurseTestMutation
+  useGetNurseTestMutation,
+  useGetPatientQuery
 } = UsersService;

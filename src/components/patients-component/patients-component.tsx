@@ -16,7 +16,7 @@ import { columnsPatient } from "./models/columns";
 import { Table } from "../../ui/table";
 import { Search } from "lucide-react";
 import { colors } from "../../mui-config/colors";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReusableDialog } from "../../ui/dialog";
 import { NurseSheetForm } from "../nurse-sheet-form";
 import { UsersType } from "../../shared/types/users";
@@ -36,6 +36,7 @@ export const PatientsComponent = () => {
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
   const [getPatients, { data, isLoading, error }] = useGetPatientsMutation();
   const [selectedRows, setSelectedRows] = useState<UsersType[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (organizationId !== null) {
@@ -131,6 +132,7 @@ export const PatientsComponent = () => {
     selectedRow,
     handleCloseView,
     handleOpenInteriorModal,
+    navigate
   });
 
   if (isLoading) {
@@ -146,7 +148,7 @@ export const PatientsComponent = () => {
   }
 
   return (
-    <Box padding={{ sm: "28px", xs: "16px" }}>
+    <Box padding={{ sm: "0 28px 28px 28px", xs: "0 16px 16px 16px" }}>
       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"} padding={"16px"}>
         <Stack
           marginBottom={"20px"}

@@ -100,7 +100,7 @@ export const Worksheets = () => {
   }
 
   return (
-    <Box padding={{ sm: "28px", xs: "16px" }}>
+    <Box padding={{ sm: "0 28px 28px 28px", xs: "0 16px 16px 16px" }}>
       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"} padding={"16px"}>
         <Table
           columns={columns}

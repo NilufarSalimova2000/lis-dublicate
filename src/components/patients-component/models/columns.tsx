@@ -16,7 +16,8 @@ interface ColumnsPatientProps {
   openView: boolean;
   selectedRow: UsersType | null;
   handleCloseView: () => void;
-  handleOpenInteriorModal: (row: UsersType) => void;
+  handleOpenInteriorModal?: (row: UsersType) => void;
+  navigate?: (to: string) => void;
 }
 
 export const columnsPatient = ({
@@ -24,11 +25,11 @@ export const columnsPatient = ({
   menuRowId,
   handleOpenMenu,
   handleCloseMenu,
-  handleViewClick,
   openView,
   selectedRow,
   handleCloseView,
   handleOpenInteriorModal,
+  navigate
 }: ColumnsPatientProps): GridColDef<UsersType>[] => {
   return [
     {
@@ -103,7 +104,7 @@ export const columnsPatient = ({
             icon: <Eye />,
             label: "View",
             onClick: () => {
-              handleViewClick(row);
+              navigate?.(`/appointment/detail/${row.id}`);
               handleCloseMenu();
             },
           },
@@ -114,7 +115,7 @@ export const columnsPatient = ({
               if (row.nurseInteriorNumber) {
                 toast.info(`Interior number: ${row.nurseInteriorNumber}`);
               } else {
-                handleOpenInteriorModal(row);
+                handleOpenInteriorModal?.(row);
               }
               handleCloseMenu();
             },

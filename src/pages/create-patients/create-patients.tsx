@@ -1,17 +1,3 @@
-// import { Box, Stack } from "@mui/material";
-// import { SearchForm } from "./components/search-form";
-// import { colors } from "../../mui-config/colors";
-
-// export const CreatePatients = () => {
-//   return (
-//     <Box padding={{ sm: "28px", xs: "16px" }}>
-//       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"} padding={"28px"}>
-//         <SearchForm />
-//       </Stack>
-//     </Box>
-//   );
-// };
-
 import { useState } from "react";
 import { Button, Box, Stack } from "@mui/material";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -214,7 +200,7 @@ export const CreatePatients = () => {
   };
 
   return (
-    <Box padding={{ sm: "28px", xs: "16px" }}>
+    <Box padding={{ sm: "0 28px 28px 28px", xs: "0 16px 16px 16px" }}>
       {" "}
       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"} padding={"28px"}>
         <Box component="form" onSubmit={handleSubmit(handleSubmitAll)} p={2}>

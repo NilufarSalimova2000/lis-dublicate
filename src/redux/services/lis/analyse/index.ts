@@ -43,6 +43,17 @@ export const AnalyseService = createApi({
       }),
     }),
 
+    getAnalysePatient: builder.query<
+      IBaseResponse<AnalyseListT>,
+      { patientId: number, orgId: number } & IPagination
+    >({
+      query: ({ patientId, orgId, ...data }) => ({
+        url: `/analyse/list-search/${patientId ?? 1}/${orgId ?? 1}`,
+        method: "POST",
+        body: { ...data },
+      }),
+    }),
+
     getMeasurementUnit: builder.query<
       IBaseResponse<BiomaterialType>,
       IPagination
@@ -111,4 +122,5 @@ export const {
   useGetMeasurementUnitQuery,
   useGetPatientAnalyseMutation,
   useCreateInteriorNumberMutation,
+  useGetAnalysePatientQuery
 } = AnalyseService;

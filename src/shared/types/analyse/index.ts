@@ -125,8 +125,6 @@ export interface AnalyseSendDetails {
   updatedDate: number;
 }
 
-
-
 export interface AnalyseListT {
   createdDate: string
   updatedDate: number

@@ -33,7 +33,7 @@ export const CreateUser = () => {
     navigate("/");
   };
   return (
-    <Box padding={{ sm: "28px", xs: "16px" }}>
+    <Box padding={{ sm: "0 28px 28px 28px", xs: "0 16px 16px 16px" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack
           bgcolor={colors.pureWhite}

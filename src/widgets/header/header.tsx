@@ -13,8 +13,8 @@ export const Header = () => {
   const pageTitle: Record<string, string> = {
     "/": "Dashboard",
     "/users": "Employees",
-    "/admission/patients": "Patients",
-    "/admission/wfa": "Waiting for admission",
+    "/appointment/patients": "Patients",
+    "/appointment/wfa": "Waiting for admission",
     "/nurse/patients": "Orders",
     "/nurse/journal": "Nurse worksheets",
     "/warehouse": "Warehouse",
