@@ -11,7 +11,7 @@ import { useGetPatientQuery } from "../../redux/services/lis/users";
 import { ChevronLeft } from "lucide-react";
 import { colors } from "../../mui-config/colors";
 import dayjs from "dayjs";
-import { AnalyseTable } from "./models/analyse-tabel";
+import { AnalyseTable } from "../../components/analyse-tabel";
 
 export const PatientDetail = () => {
   const { id } = useParams();

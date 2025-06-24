@@ -1,6 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { IconButton, Stack, Box, Typography } from "@mui/material";
-import { MenuIcon, Pencil, Trash2, Eye } from "lucide-react";
+import { MenuIcon, Trash2, Eye } from "lucide-react";
 import { ReusableMenu } from "../../../ui/menu";
 import { ReusableDialog } from "../../../ui/dialog/dialog";
 
@@ -44,14 +44,6 @@ export const dashboardColumns = ({
 
       const menuItems = [
         {
-          icon: <Pencil />,
-          label: "Tahrirlash",
-          onClick: () => {
-            console.log("Edit", row.id);
-            handleCloseMenu();
-          },
-        },
-        {
           icon: <Trash2 />,
           label: "O‘chirish",
           onClick: () => handleDeleteClick(row),
@@ -91,7 +83,7 @@ export const dashboardColumns = ({
 
           {openView && selectedRow?.id === row.id && (
             <ReusableDialog
-            width={"700px"}
+              width={"700px"}
               open={openView}
               onClose={handleCloseView}
               title="User info"

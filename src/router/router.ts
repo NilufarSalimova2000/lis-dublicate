@@ -8,6 +8,7 @@ import { Warehouse } from "../pages/warehouse";
 import { CreateUser } from "../pages/create-user";
 import { CreatePatients } from "../pages/create-patients";
 import { PatientDetail } from "../pages/patient-detail";
+import { Analyses } from "../pages/analyses";
 
 interface Type {
     id: string,
@@ -64,5 +65,10 @@ export const Router: Type[] = [
         id: nanoid(),
         path: "/appointment/detail/:id",
         component: PatientDetail
+    },
+    {
+        id: nanoid(),
+        path: "/appointment/analyses/:id",
+        component: Analyses
     }
 ]

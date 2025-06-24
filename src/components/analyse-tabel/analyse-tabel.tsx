@@ -1,11 +1,11 @@
-import { Box, CircularProgress, Stack } from "@mui/material";
+import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 import { useState } from "react";
-import { columnsAnalyses } from "./columns";
-import { colors } from "../../../mui-config/colors";
-import { Table } from "../../../ui/table";
-import { organizationId } from "../../../shared/constants";
-import { useGetAnalysePatientQuery } from "../../../redux/services/lis/analyse";
-import { AnalyseListT } from "../../../shared/types/analyse";
+import { useGetAnalysePatientQuery } from "../../redux/services/lis/analyse";
+import { organizationId } from "../../shared/constants";
+import { AnalyseListT } from "../../shared/types/analyse";
+import { columnsAnalyses } from "./models/columns";
+import { colors } from "../../mui-config/colors";
+import { Table } from "../../ui/table";
 
 interface AnalyseTableProps {
     patientId: number;
@@ -59,6 +59,7 @@ export const AnalyseTable = ({ patientId }: AnalyseTableProps) => {
 
   return (
     <Box marginTop={"15px"}>
+      <Typography mb={"10px"} variant="h6">Analyses</Typography>
       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"}>
         <Table
           columns={columns}

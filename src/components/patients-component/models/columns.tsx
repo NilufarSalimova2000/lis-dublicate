@@ -1,9 +1,8 @@
-import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { MenuIcon, Eye, FileDigit } from "lucide-react";
+import { IconButton } from "@mui/material";
+import { MenuIcon, Eye, FileDigit, TestTubes } from "lucide-react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ReusableMenu } from "../../../ui/menu";
 import { UsersType } from "../../../shared/types/users";
-import { ReusableDialog } from "../../../ui/dialog";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
@@ -12,10 +11,6 @@ interface ColumnsPatientProps {
   menuRowId: number | null;
   handleOpenMenu: (event: React.MouseEvent<HTMLElement>, id: number) => void;
   handleCloseMenu: () => void;
-  handleViewClick: (row: UsersType) => void;
-  openView: boolean;
-  selectedRow: UsersType | null;
-  handleCloseView: () => void;
   handleOpenInteriorModal?: (row: UsersType) => void;
   navigate?: (to: string) => void;
 }
@@ -25,11 +20,8 @@ export const columnsPatient = ({
   menuRowId,
   handleOpenMenu,
   handleCloseMenu,
-  openView,
-  selectedRow,
-  handleCloseView,
   handleOpenInteriorModal,
-  navigate
+  navigate,
 }: ColumnsPatientProps): GridColDef<UsersType>[] => {
   return [
     {
@@ -120,6 +112,14 @@ export const columnsPatient = ({
               handleCloseMenu();
             },
           },
+          {
+            icon: <TestTubes />,
+            label: "Analyses",
+            onClick: () => {
+              navigate?.(`/appointment/analyses/${row.id}`);
+              handleCloseMenu();
+            },
+          },
         ];
 
         return (
@@ -132,117 +132,6 @@ export const columnsPatient = ({
                 anchorEl={anchorEl}
                 onClose={handleCloseMenu}
                 menuItems={menuItems}
-              />
-            )}
-            {openView && selectedRow?.id === row.id && (
-              <ReusableDialog
-                width={"700px"}
-                open={openView}
-                onClose={handleCloseView}
-                title="User info"
-                description={
-                  <Stack direction="row" justifyContent="space-between">
-                    <Box>
-                      <Typography
-                        display="flex"
-                        alignItems={"center"}
-                        gap="5px"
-                        variant="h6"
-                      >
-                        Full name:{" "}
-                        <Typography variant="body1">
-                          {`${selectedRow.lastName || ""} ${
-                            selectedRow.firstName || ""
-                          } ${selectedRow.middleName || ""}`.trim() || "-"}
-                        </Typography>
-                      </Typography>
-                      <Typography
-                        display="flex"
-                        alignItems={"center"}
-                        gap="5px"
-                        variant="h6"
-                      >
-                        PNFL:{" "}
-                        <Typography variant="body1">
-                          {selectedRow.pnfl || "-"}
-                        </Typography>
-                      </Typography>
-                      <Typography
-                        display="flex"
-                        alignItems={"center"}
-                        gap="5px"
-                        variant="h6"
-                      >
-                        Passport serial number:{" "}
-                        <Typography variant="body1">
-                          {`${selectedRow.passportSerial || ""} ${
-                            selectedRow.passportNumber || ""
-                          }`.trim() || "-"}
-                        </Typography>
-                      </Typography>
-                      <Typography
-                        display="flex"
-                        alignItems={"center"}
-                        gap="5px"
-                        variant="h6"
-                      >
-                        Email:{" "}
-                        <Typography variant="body1">
-                          {selectedRow.email || "-"}
-                        </Typography>
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Typography
-                        display="flex"
-                        alignItems={"center"}
-                        gap="5px"
-                        variant="h6"
-                      >
-                        Address:{" "}
-                        <Typography variant="body1">
-                          {selectedRow.address || "-"}
-                        </Typography>
-                      </Typography>
-                      <Typography
-                        display="flex"
-                        alignItems={"center"}
-                        gap="5px"
-                        variant="h6"
-                      >
-                        Phone:{" "}
-                        <Typography variant="body1">
-                          {selectedRow.phone || "-"}
-                        </Typography>
-                      </Typography>
-                      <Typography
-                        display="flex"
-                        alignItems={"center"}
-                        gap="5px"
-                        variant="h6"
-                      >
-                        Nationality:{" "}
-                        <Typography variant="body1">
-                          {selectedRow.nationality || "-"}
-                        </Typography>
-                      </Typography>
-                      <Typography
-                        display="flex"
-                        alignItems={"center"}
-                        gap="5px"
-                        variant="h6"
-                      >
-                        Region:{" "}
-                        <Typography variant="body1">
-                          {selectedRow.region?.name || "-"}
-                        </Typography>
-                      </Typography>
-                    </Box>
-                  </Stack>
-                }
-                showCancelButton
-                showConfirmButton={false}
-                cancelText="Yopish"
               />
             )}
           </>

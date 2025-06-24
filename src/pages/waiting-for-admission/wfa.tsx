@@ -12,7 +12,7 @@ import { useToggle } from "../../hooks/useToggle";
 import { Table } from "../../ui/table";
 import { Search } from "lucide-react";
 import { colors } from "../../mui-config/colors";
-import { columnsPatient } from "../../components/patients-component/models/columns";
+import { columnsWFA } from "./models/columns";
 
 export const WFA = () => {
   const [page, setPage] = useState(0);
@@ -64,7 +64,7 @@ export const WFA = () => {
     setSelectedRow(null);
   };
 
-  const columns = columnsPatient({
+  const columns = columnsWFA({
     anchorEl: menuAnchorEl,
     menuRowId,
     handleOpenMenu,

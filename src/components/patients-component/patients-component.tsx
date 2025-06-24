@@ -32,7 +32,6 @@ export const PatientsComponent = () => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
-  const [selectedRow, setSelectedRow] = useState<any>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
   const [getPatients, { data, isLoading, error }] = useGetPatientsMutation();
   const [selectedRows, setSelectedRows] = useState<UsersType[]>([]);
@@ -48,12 +47,6 @@ export const PatientsComponent = () => {
       });
     }
   }, [getPatients, organizationId, page, limit]);
-
-  const {
-    open: openView,
-    handleOpen: openViewDialog,
-    handleClose: closeViewDialog,
-  } = useToggle();
 
   const {
     open: isNurseSheetOpen,
@@ -82,17 +75,6 @@ export const PatientsComponent = () => {
     setMenuRowId(null);
   };
 
-  const handleViewClick = (row: UsersType) => {
-    setSelectedRow(row);
-    openViewDialog();
-    handleCloseMenu();
-  };
-
-  const handleCloseView = () => {
-    closeViewDialog();
-    setSelectedRow(null);
-  };
-
   const handleOpenInteriorModal = (row: UsersType) => {
     setCurrentPatient(row);
     openInteriorOpen();
@@ -116,7 +98,6 @@ export const PatientsComponent = () => {
 
       toast.success(`Qo‘shildi: ${res.number}`);
       closeInteriorModal();
-      setSelectedRow(null);
     } catch (error) {
       toast.error("Qo‘shishda xatolik yuz berdi");
     }
@@ -127,10 +108,6 @@ export const PatientsComponent = () => {
     menuRowId,
     handleOpenMenu,
     handleCloseMenu,
-    handleViewClick,
-    openView,
-    selectedRow,
-    handleCloseView,
     handleOpenInteriorModal,
     navigate
   });

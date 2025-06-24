@@ -5,9 +5,8 @@ import { ReusableMenu } from "../../../ui/menu";
 import { UsersType } from "../../../shared/types/users";
 import { ReusableDialog } from "../../../ui/dialog";
 import dayjs from "dayjs";
-import { Roles } from "../../../shared/types/roles";
 
-interface ColumnsUserProps {
+interface ColumnsWFAProps {
   anchorEl: HTMLElement | null;
   menuRowId: number | null;
   handleOpenMenu: (event: React.MouseEvent<HTMLElement>, id: number) => void;
@@ -18,16 +17,16 @@ interface ColumnsUserProps {
   handleCloseView: () => void;
 }
 
-export const columnsUser = ({
+export const columnsWFA = ({
   anchorEl,
   menuRowId,
   handleOpenMenu,
   handleCloseMenu,
-  handleViewClick,
   openView,
   selectedRow,
   handleCloseView,
-}: ColumnsUserProps): GridColDef<UsersType>[] => {
+  handleViewClick
+}: ColumnsWFAProps): GridColDef<UsersType>[] => {
   return [
     {
       field: "id",
@@ -57,6 +56,13 @@ export const columnsUser = ({
         params.value || "—",
     },
     {
+      field: "nurseInteriorNumber",
+      headerName: "Nurse interior number",
+      flex: 1,
+      renderCell: (params: GridRenderCellParams<UsersType>) =>
+        params.value || "—",
+    },
+    {
       field: "dateOfBirth",
       headerName: "Date of birth",
       flex: 1,
@@ -66,18 +72,18 @@ export const columnsUser = ({
       },
     },
     {
-      field: "roles",
-      headerName: "Role",
+      field: "region",
+      headerName: "Region",
       flex: 1,
-      renderCell: (params: GridRenderCellParams<UsersType>) => {
-        const roles = params.row.roles;
-        if (roles && roles.length > 0) {
-          return roles
-            .map((role) => Roles[role.name as keyof typeof Roles] || role.name)
-            .join(", ");
-        }
-        return "—";
-      },
+      renderCell: (params: GridRenderCellParams<UsersType>) =>
+        params.value?.name || "—",
+    },
+    {
+      field: "district",
+      headerName: "District",
+      flex: 1,
+      renderCell: (params: GridRenderCellParams<UsersType>) =>
+        params.value?.name || "—",
     },
     {
       field: "actions",
@@ -212,7 +218,7 @@ export const columnsUser = ({
                       >
                         Region:{" "}
                         <Typography variant="body1">
-                          {selectedRow.region || "-"}
+                          {selectedRow.region?.name || "-"}
                         </Typography>
                       </Typography>
                     </Box>
