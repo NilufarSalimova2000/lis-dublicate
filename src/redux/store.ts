@@ -12,6 +12,7 @@ import { RegionService } from "./services/lis/region";
 import { AnalyseService } from "./services/lis/analyse";
 import { WarehouseService } from "./services/lis/warehouse";
 import { NurseTestService } from "./services/lis/nurse-test-tube";
+import { LabrantTestTubeService } from "./services/lis/labrant-test-tube";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     [AnalyseService.reducerPath]: AnalyseService.reducer,
     [WarehouseService.reducerPath]: WarehouseService.reducer,
     [NurseTestService.reducerPath]: NurseTestService.reducer,
+    [LabrantTestTubeService.reducerPath]: LabrantTestTubeService.reducer
   },
   preloadedState: {
     crud: loadState("users"),
@@ -41,7 +43,8 @@ export const store = configureStore({
       RegionService.middleware,
       AnalyseService.middleware,
       WarehouseService.middleware,
-      NurseTestService.middleware
+      NurseTestService.middleware,
+      LabrantTestTubeService.middleware
     ),
 });
 

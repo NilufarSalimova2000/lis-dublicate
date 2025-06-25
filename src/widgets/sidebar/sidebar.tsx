@@ -16,6 +16,7 @@ import {
   ChevronDown,
   ChevronUp,
   Coffee,
+  FlaskConical,
   Hospital,
   LayoutDashboard,
   ListIcon,
@@ -49,6 +50,15 @@ export const navItems = [
     children: [
       { icon: <ListIcon />, label: "Orders", path: "/nurse/patients" },
       { icon: <NotepadText />, label: "My worksheets", path: "/nurse/journal" },
+    ],
+  },
+  {
+    icon: <FlaskConical />,
+    label: "Laboratory",
+    children: [
+      { icon: <ListIcon />, label: "Research", path: "/labrant/patients" },
+      { icon: <ListIcon />, label: "Incoming worksheets", path: "/labrant/tube-list" },
+      { icon: <NotepadText />, label: "My worksheets", path: "/labrant/journal" },
     ],
   },
   {
