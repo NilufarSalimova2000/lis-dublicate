@@ -45,7 +45,7 @@ export const AnalyseService = createApi({
 
     getAnalysePatient: builder.query<
       IBaseResponse<AnalyseListT>,
-      { patientId: number, orgId: number } & IPagination
+      { patientId: number; orgId: number } & IPagination
     >({
       query: ({ patientId, orgId, ...data }) => ({
         url: `/analyse/list-search/${patientId ?? 1}/${orgId ?? 1}`,
@@ -109,6 +109,21 @@ export const AnalyseService = createApi({
         params: { departmentId, internalNumber },
       }),
     }),
+
+    createLabrantInteriorNumber: builder.mutation<
+    { message: string },
+      { id: number | string; internalNumber: string }
+    >({
+      query: ({ id, internalNumber }) => ({
+        url: `/analyse/labrant-internal-number/${id}`,
+        method: "POST",
+        params: { internalNumber },
+        responseHandler: "text" as any,
+      }),
+      transformResponse: (response: string) => {
+        return { message: response }; 
+      },
+    }),
   }),
 });
 
@@ -122,5 +137,6 @@ export const {
   useGetMeasurementUnitQuery,
   useGetPatientAnalyseMutation,
   useCreateInteriorNumberMutation,
-  useGetAnalysePatientQuery
+  useGetAnalysePatientQuery,
+  useCreateLabrantInteriorNumberMutation
 } = AnalyseService;

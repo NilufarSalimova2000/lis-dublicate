@@ -7,3 +7,9 @@ export interface LabrantTestTubeT {
   analyses: AnalyseListT[];
   analyseIds: any;
 }
+
+export interface CreateLabrantTestTubeT {
+  analyseIds: string[]; 
+  title: string;
+  description: string;
+} 

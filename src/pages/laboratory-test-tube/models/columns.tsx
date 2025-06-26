@@ -94,8 +94,8 @@ export const columnsLabrantTest = ({
             icon: <Trash2 />,
             label: "O'chirish",
             onClick: () => {
-              setSelectedDeleteRow(row); // bu yerda row ni tanlaymiz
-              openDeleteDialog(); // va dialogni ochamiz
+              setSelectedDeleteRow(row); 
+              openDeleteDialog();
               handleCloseMenu();
             },
           },

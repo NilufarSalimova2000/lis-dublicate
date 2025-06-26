@@ -31,8 +31,22 @@ export const NurseTestService = createApi({
         body: { ...data },
       }),
     }),
+
+    deleteNurseTestTube: builder.mutation<{ message: string }, number>({
+      query: (id) => ({
+        url: `/nurse-test-tube/${id}`,
+        method: "DELETE",
+        responseHandler: "text" as any,
+      }),
+      transformResponse: (response: string) => {
+        return { message: response };
+      },
+    }),
   }),
 });
 
-export const { useGetNurseTestTubeMutation, useCreateNurseTestTubeMutation } =
-  NurseTestService;
+export const {
+  useGetNurseTestTubeMutation,
+  useCreateNurseTestTubeMutation,
+  useDeleteNurseTestTubeMutation,
+} = NurseTestService;

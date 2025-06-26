@@ -1,15 +1,17 @@
 import { IconButton } from "@mui/material";
-import { MenuIcon, Eye } from "lucide-react";
+import { FileDigit, MenuIcon } from "lucide-react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { ReusableMenu } from "../../../ui/menu";
 import dayjs from "dayjs";
 import { AnalyseListT } from "../../../shared/types/analyse";
+import { toast } from "react-toastify";
+import { ReusableMenu } from "../../../ui/menu";
 
 interface ColumnsAnalyseProps {
   anchorEl: HTMLElement | null;
   menuRowId: number | null;
   handleOpenMenu: (event: React.MouseEvent<HTMLElement>, id: number) => void;
   handleCloseMenu: () => void;
+  handleOpenInteriorModal?: (row: AnalyseListT) => void;
 }
 
 export const columnsAnalyses = ({
@@ -17,6 +19,7 @@ export const columnsAnalyses = ({
   menuRowId,
   handleOpenMenu,
   handleCloseMenu,
+  handleOpenInteriorModal
 }: ColumnsAnalyseProps): GridColDef<AnalyseListT>[] => {
   return [
     {
@@ -45,7 +48,7 @@ export const columnsAnalyses = ({
       headerName: "Internal number",
       flex: 1,
       renderCell: (params: GridRenderCellParams<AnalyseListT>) =>
-        params.value || "—",
+        params.row.analyseDetails?.internalNumber || "—",
     },
     {
       field: "nameUz",
@@ -75,10 +78,15 @@ export const columnsAnalyses = ({
 
         const menuItems = [
           {
-            icon: <Eye />,
-            label: "View",
+            icon: <FileDigit />,
+            label: "Internal number",
             onClick: () => {
-              console.log(row);
+              if (row.analyseDetails?.internalNumber) {
+                toast.info(`Internal number: ${row.analyseDetails?.internalNumber}`);
+              } else {
+                handleOpenInteriorModal?.(row);
+              }
+              handleCloseMenu();
             },
           },
         ];

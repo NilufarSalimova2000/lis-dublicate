@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import { MenuIcon, Eye, FileDigit, TestTubes } from "lucide-react";
+import { MenuIcon, Eye, FileDigit, TestTubes, ScanBarcode } from "lucide-react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ReusableMenu } from "../../../ui/menu";
 import { UsersType } from "../../../shared/types/users";
@@ -13,6 +13,7 @@ interface ColumnsPatientProps {
   handleCloseMenu: () => void;
   handleOpenInteriorModal?: (row: UsersType) => void;
   navigate?: (to: string) => void;
+  handleOpenBarcodeModal?: (row: UsersType) => void;
 }
 
 export const columnsPatient = ({
@@ -22,6 +23,7 @@ export const columnsPatient = ({
   handleCloseMenu,
   handleOpenInteriorModal,
   navigate,
+  handleOpenBarcodeModal,
 }: ColumnsPatientProps): GridColDef<UsersType>[] => {
   return [
     {
@@ -117,6 +119,14 @@ export const columnsPatient = ({
             label: "Analyses",
             onClick: () => {
               navigate?.(`/appointment/analyses/${row.id}`);
+              handleCloseMenu();
+            },
+          },
+          {
+            icon: <ScanBarcode />,
+            label: "Barcode",
+            onClick: () => {
+              handleOpenBarcodeModal?.(row);
               handleCloseMenu();
             },
           },

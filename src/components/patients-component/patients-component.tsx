@@ -23,6 +23,7 @@ import { UsersType } from "../../shared/types/users";
 import { toast } from "react-toastify";
 import { useCreateInteriorNumberMutation } from "../../redux/services/lis/analyse";
 import { useForm } from "react-hook-form";
+import Barcode from "react-barcode";
 
 interface InteriorNumberFormValues {
   number: string;
@@ -103,13 +104,29 @@ export const PatientsComponent = () => {
     }
   };
 
+  const {
+    open: isBarcodeModalOpen,
+    handleOpen: openBarcodeModal,
+    handleClose: closeBarcodeModal,
+  } = useToggle();
+
+  const [selectedPatient, setSelectedPatient] = useState<UsersType | null>(
+    null
+  );
+
+  const handleOpenBarcodeModal = (row: UsersType) => {
+    setSelectedPatient(row);
+    openBarcodeModal();
+  };
+
   const columns = columnsPatient({
     anchorEl: menuAnchorEl,
     menuRowId,
     handleOpenMenu,
     handleCloseMenu,
     handleOpenInteriorModal,
-    navigate
+    navigate,
+    handleOpenBarcodeModal,
   });
 
   if (isLoading) {
@@ -244,6 +261,25 @@ export const PatientsComponent = () => {
         }
         showCancelButton={false}
         showConfirmButton={false}
+      />
+
+      <ReusableDialog
+        open={isBarcodeModalOpen}
+        onClose={() => {
+          closeBarcodeModal();
+          setSelectedPatient(null);
+        }}
+        title="Barcode"
+        width={400}
+        description={
+          selectedPatient ? (
+            <Box display="flex" justifyContent="center" py={3}>
+              <Barcode value={selectedPatient.pnfl.toString()} />
+            </Box>
+          ) : null
+        }
+        showConfirmButton={false}
+        cancelText="cancel"
       />
     </Box>
   );

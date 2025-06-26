@@ -13,6 +13,7 @@ import { useState } from "react";
 import Logo from "../../assets/images/Logo.svg";
 import logoTablet from "../../assets/images/logo-tablet.svg";
 import {
+  Calculator,
   ChevronDown,
   ChevronUp,
   Coffee,
@@ -22,6 +23,7 @@ import {
   ListIcon,
   NotepadText,
   ShieldPlus,
+  User,
   UserPlus,
   Users,
   Warehouse,
@@ -59,6 +61,13 @@ export const navItems = [
       { icon: <ListIcon />, label: "Research", path: "/labrant/patients" },
       { icon: <ListIcon />, label: "Incoming worksheets", path: "/labrant/tube-list" },
       { icon: <NotepadText />, label: "My worksheets", path: "/labrant/journal" },
+    ],
+  },
+  {
+    icon: <Calculator />,
+    label: "Cash register",
+    children: [
+      { icon: <User />, label: "Patients", path: "/cashier/patients" },
     ],
   },
   {

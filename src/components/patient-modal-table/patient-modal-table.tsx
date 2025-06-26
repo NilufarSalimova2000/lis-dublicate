@@ -3,8 +3,7 @@ import { Table } from "../../ui/table";
 import { columnsPatient } from "../patients-component/models/columns";
 import { Box, CircularProgress } from "@mui/material";
 import { useGetNurseTestMutation } from "../../redux/services/lis/users";
-import { UsersType } from "../../shared/types/users";
-import { useToggle } from "../../hooks/useToggle";
+import { useNavigate } from "react-router-dom";
 
 interface PatientsModalTableProps {
   nurseTestId: number | null;
@@ -16,6 +15,7 @@ export const PatientsModalTable = ({
   const [getPatients, { data, isLoading, error }] = useGetNurseTestMutation();
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (nurseTestId) {
@@ -30,13 +30,6 @@ export const PatientsModalTable = ({
 
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
-  const [selectedRow, setSelectedRow] = useState<UsersType | null>(null);
-
-  const {
-    open: openView,
-    handleOpen: handleOpenView,
-    handleClose: handleCloseView,
-  } = useToggle();
 
   const handleOpenMenu = (
     event: React.MouseEvent<HTMLElement>,
@@ -49,12 +42,6 @@ export const PatientsModalTable = ({
   const handleCloseMenu = () => {
     setMenuAnchorEl(null);
     setMenuRowId(null);
-  };
-
-  const handleViewClick = (row: UsersType) => {
-    setSelectedRow(row);
-    handleOpenView();
-    handleCloseMenu();
   };
 
   if (!nurseTestId) return null;
@@ -73,10 +60,7 @@ export const PatientsModalTable = ({
         menuRowId,
         handleOpenMenu,
         handleCloseMenu,
-        handleViewClick,
-        openView,
-        selectedRow,
-        handleCloseView,
+        navigate,
       })}
       rows={data || []}
       page={page}

@@ -33,6 +33,7 @@
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.507.0",
     "react": "^18.3.1",
+    "react-barcode": "^1.6.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.56.1",
     "react-redux": "^9.2.0",

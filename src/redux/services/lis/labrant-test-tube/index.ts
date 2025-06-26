@@ -1,7 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { lisBaseQuery } from "../../../../shared/createBaseQuery";
 import { IBaseResponse, IPagination } from "../../../../shared/types/common";
-import { LabrantTestTubeT } from "../../../../shared/types/labrant-test-tube";
+import {
+  CreateLabrantTestTubeT,
+  LabrantTestTubeT,
+} from "../../../../shared/types/labrant-test-tube";
 
 export const LabrantTestTubeService = createApi({
   reducerPath: "LabrantTestTubeService",
@@ -18,18 +21,32 @@ export const LabrantTestTubeService = createApi({
       }),
     }),
 
+    createLabrantTestTube: builder.mutation<
+      LabrantTestTubeT,
+      CreateLabrantTestTubeT
+    >({
+      query: ({ ...data }) => ({
+        url: `/labrant-test-tube`,
+        method: "POST",
+        body: { ...data },
+      }),
+    }),
+
     deleteLabrantTestTube: builder.mutation<{ message: string }, number>({
       query: (id) => ({
         url: `/labrant-test-tube/${id}`,
         method: "DELETE",
-        responseHandler: "text" as any, 
+        responseHandler: "text" as any,
       }),
       transformResponse: (response: string) => {
-        return { message: response }; 
+        return { message: response };
       },
     }),
   }),
 });
 
-export const { useGetLabrantTestTubeQuery, useDeleteLabrantTestTubeMutation } =
-  LabrantTestTubeService;
+export const {
+  useGetLabrantTestTubeQuery,
+  useDeleteLabrantTestTubeMutation,
+  useCreateLabrantTestTubeMutation,
+} = LabrantTestTubeService;

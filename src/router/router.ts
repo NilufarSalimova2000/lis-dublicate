@@ -86,5 +86,10 @@ export const Router: Type[] = [
         id: nanoid(),
         path: "/labrant/journal",
         component: LaboratoryTestTube
+    },
+    {
+        id: nanoid(),
+        path: "/cashier/patients",
+        component: Patients
     }
 ]

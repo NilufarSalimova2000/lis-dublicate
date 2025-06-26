@@ -1,5 +1,5 @@
 import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { MenuIcon, Eye, Users } from "lucide-react";
+import { MenuIcon, Eye, Users, Trash2 } from "lucide-react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ReusableMenu } from "../../../ui/menu";
 import { ReusableDialog } from "../../../ui/dialog";
@@ -15,6 +15,12 @@ interface ColumnsNurseWorksheets {
   selectedRow: NurseTestTubeType | null;
   handleCloseView: () => void;
   handleOpenPatientsModal: (id: number) => void;
+  openDelete: boolean;
+  selectedDeleteRow: NurseTestTubeType | null;
+  handleCloseDelete: () => void;
+  handleDeleteConfirm: () => void;
+  setSelectedDeleteRow: (row: NurseTestTubeType) => void;
+  openDeleteDialog: () => void;
 }
 
 export const columnsWorksheets = ({
@@ -27,6 +33,12 @@ export const columnsWorksheets = ({
   selectedRow,
   handleCloseView,
   handleOpenPatientsModal,
+  openDelete,
+  selectedDeleteRow,
+  handleCloseDelete,
+  handleDeleteConfirm,
+  setSelectedDeleteRow,
+  openDeleteDialog,
 }: ColumnsNurseWorksheets): GridColDef<NurseTestTubeType>[] => {
   return [
     {
@@ -73,10 +85,19 @@ export const columnsWorksheets = ({
             icon: <Users />,
             label: "Patients",
             onClick: () => {
-              handleOpenPatientsModal(row.id); 
+              handleOpenPatientsModal(row.id);
               handleCloseMenu();
             },
-          }
+          },
+          {
+            icon: <Trash2 />,
+            label: "O'chirish",
+            onClick: () => {
+              setSelectedDeleteRow(row);
+              openDeleteDialog();
+              handleCloseMenu();
+            },
+          },
         ];
 
         return (
@@ -143,6 +164,20 @@ export const columnsWorksheets = ({
                 showCancelButton
                 showConfirmButton={false}
                 cancelText="Cancel"
+              />
+            )}
+
+            {openDelete && selectedDeleteRow?.id === row.id && (
+              <ReusableDialog
+                open={openDelete}
+                onClose={handleCloseDelete}
+                title="Tasdiqlash"
+                description="Ushbu ma'lumotni o‘chirishni xohlaysizmi?"
+                confirmText="Ha, o‘chirish"
+                cancelText="Bekor qilish"
+                onConfirm={handleDeleteConfirm}
+                showCancelButton
+                showConfirmButton
               />
             )}
           </>

@@ -5,9 +5,14 @@ import { useToggle } from "../../hooks/useToggle";
 import { Table } from "../../ui/table";
 import { colors } from "../../mui-config/colors";
 import { columnsWorksheets } from "./models/columns";
-import { useGetNurseTestTubeMutation } from "../../redux/services/lis/nurse-test-tube";
+import {
+  useDeleteNurseTestTubeMutation,
+  useGetNurseTestTubeMutation,
+} from "../../redux/services/lis/nurse-test-tube";
 import { ReusableDialog } from "../../ui/dialog";
 import { PatientsModalTable } from "../../components/patient-modal-table";
+import { NurseTestTubeType } from "../../shared/types/users/nurse-test-tube";
+import { toast } from "react-toastify";
 
 export const Worksheets = () => {
   const [page, setPage] = useState(0);
@@ -17,6 +22,7 @@ export const Worksheets = () => {
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
   const [getPatients, { data, isLoading, error }] =
     useGetNurseTestTubeMutation();
+  const [deleteNurseTestTube] = useDeleteNurseTestTubeMutation();
 
   useEffect(() => {
     if (organizationId !== null) {
@@ -75,6 +81,31 @@ export const Worksheets = () => {
     setSelectedRow(null);
   };
 
+  const {
+    open: openDelete,
+    handleOpen: openDeleteDialog,
+    handleClose: closeDeleteDialog,
+  } = useToggle();
+
+  const [selectedDeleteRow, setSelectedDeleteRow] =
+    useState<NurseTestTubeType | null>(null);
+
+  const handleDeleteConfirm = async () => {
+    if (!selectedDeleteRow) return;
+
+    try {
+      await deleteNurseTestTube(selectedDeleteRow.id).unwrap();
+
+      toast.success("Muvaffaqiyatli o‘chirildi");
+
+      closeDeleteDialog();
+      setSelectedDeleteRow(null);
+    } catch (err) {
+      toast.error("O‘chirishda xatolik yuz berdi");
+      console.error("Delete error:", err);
+    }
+  };
+
   const columns = columnsWorksheets({
     anchorEl: menuAnchorEl,
     menuRowId,
@@ -85,6 +116,12 @@ export const Worksheets = () => {
     selectedRow,
     handleCloseView,
     handleOpenPatientsModal,
+    openDelete,
+    selectedDeleteRow,
+    handleCloseDelete: closeDeleteDialog,
+    handleDeleteConfirm,
+    openDeleteDialog,
+    setSelectedDeleteRow,
   });
 
   if (isLoading) {

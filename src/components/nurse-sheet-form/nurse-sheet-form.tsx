@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useGetAnalyseQuery } from "../../redux/services/lis/analyse";
 import { BiomaterialType } from "../../shared/types/analyse";
 import { useCreateNurseTestTubeMutation } from "../../redux/services/lis/nurse-test-tube";
-import { NurseTestTubeRequestT } from "../../shared/types/users/nurse-test-tube";
+import { NurseTestTubeRequestT, NurseTestTubeType } from "../../shared/types/users/nurse-test-tube";
 
 interface FormValues {
   name: string;
@@ -24,7 +24,7 @@ interface FormValues {
 interface NurseSheetFormProps {
     orgId: number;
     selectedPatients: { id: number }[]; 
-    onSubmitSuccess?: (data: any) => void;
+    onSubmitSuccess?: (data: NurseTestTubeType) => void;
   }
 
 export const NurseSheetForm = ({
