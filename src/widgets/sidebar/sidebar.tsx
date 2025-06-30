@@ -13,16 +13,22 @@ import { useState } from "react";
 import Logo from "../../assets/images/Logo.svg";
 import logoTablet from "../../assets/images/logo-tablet.svg";
 import {
+  Atom,
+  Building2,
   Calculator,
   ChevronDown,
   ChevronUp,
   Coffee,
   FlaskConical,
+  FlaskRound,
   Hospital,
+  Hourglass,
   LayoutDashboard,
   ListIcon,
+  Microscope,
   NotepadText,
   ShieldPlus,
+  TestTubeDiagonal,
   User,
   UserPlus,
   Users,
@@ -68,6 +74,17 @@ export const navItems = [
     label: "Cash register",
     children: [
       { icon: <User />, label: "Patients", path: "/cashier/patients" },
+    ],
+  },
+  {
+    icon: <Microscope />,
+    label: "Directories",
+    children: [
+      { icon: <Building2 />, label: "Organizations", path: "/references/organizations" },
+      { icon: <Hourglass />, label: "Biomaterials", path: "/references/biomaterials" },
+      { icon: <FlaskRound />, label: "Measurement results", path: "/references/result-measurements" },
+      { icon: <TestTubeDiagonal />, label: "Units of measurement", path: "/references/measurements" },
+      { icon: <Atom />, label: "LOINC", path: "/references/loinc" },
     ],
   },
   {

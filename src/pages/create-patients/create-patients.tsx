@@ -11,6 +11,7 @@ import {
   useGetLoincQuery,
 } from "../../redux/services/lis/analyse";
 import { colors } from "../../mui-config/colors";
+import { BiomaterialService } from "../../redux/services/lis/analyse/biomaterials";
 
 export type TAnalyseCreateForm = Omit<
   AnalyseCreateT,
@@ -96,7 +97,7 @@ export const CreatePatients = () => {
   });
   const loincList = loincListRes?.data.list ?? [];
 
-  const { data: biomaterialListR } = AnalyseService.useGetBiomaterialQuery({
+  const { data: biomaterialListR } = BiomaterialService.useGetBiomaterialQuery({
     page: 0,
     limit: 100,
     search: { value: "" },

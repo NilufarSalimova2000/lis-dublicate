@@ -27,14 +27,6 @@ export const AnalyseService = createApi({
       }),
     }),
 
-    getBiomaterial: builder.query<IBaseResponse<BiomaterialType>, IPagination>({
-      query: ({ ...data }) => ({
-        url: `/type-biomaterial/list-search`,
-        method: "POST",
-        body: { ...data },
-      }),
-    }),
-
     getAnalyse: builder.query<IBaseResponse<BiomaterialType>, IPagination>({
       query: ({ ...data }) => ({
         url: `/analyse-type/list-search`,
@@ -111,7 +103,7 @@ export const AnalyseService = createApi({
     }),
 
     createLabrantInteriorNumber: builder.mutation<
-    { message: string },
+      { message: string },
       { id: number | string; internalNumber: string }
     >({
       query: ({ id, internalNumber }) => ({
@@ -121,7 +113,7 @@ export const AnalyseService = createApi({
         responseHandler: "text" as any,
       }),
       transformResponse: (response: string) => {
-        return { message: response }; 
+        return { message: response };
       },
     }),
   }),
@@ -132,11 +124,10 @@ export const {
   useDeleteAnalyseMutation,
   useGetAnalyseQuery,
   useGetApplicationQuery,
-  useGetBiomaterialQuery,
   useGetLoincQuery,
   useGetMeasurementUnitQuery,
   useGetPatientAnalyseMutation,
   useCreateInteriorNumberMutation,
   useGetAnalysePatientQuery,
-  useCreateLabrantInteriorNumberMutation
+  useCreateLabrantInteriorNumberMutation,
 } = AnalyseService;

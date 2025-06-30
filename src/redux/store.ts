@@ -13,6 +13,7 @@ import { AnalyseService } from "./services/lis/analyse";
 import { WarehouseService } from "./services/lis/warehouse";
 import { NurseTestService } from "./services/lis/nurse-test-tube";
 import { LabrantTestTubeService } from "./services/lis/labrant-test-tube";
+import { BiomaterialService } from "./services/lis/analyse/biomaterials";
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
     [MisService.reducerPath]: MisService.reducer,
     [RegionService.reducerPath]: RegionService.reducer,
     [AnalyseService.reducerPath]: AnalyseService.reducer,
+    [BiomaterialService.reducerPath]: BiomaterialService.reducer,
     [WarehouseService.reducerPath]: WarehouseService.reducer,
     [NurseTestService.reducerPath]: NurseTestService.reducer,
     [LabrantTestTubeService.reducerPath]: LabrantTestTubeService.reducer
@@ -42,6 +44,7 @@ export const store = configureStore({
       MisService.middleware,
       RegionService.middleware,
       AnalyseService.middleware,
+      BiomaterialService.middleware,
       WarehouseService.middleware,
       NurseTestService.middleware,
       LabrantTestTubeService.middleware

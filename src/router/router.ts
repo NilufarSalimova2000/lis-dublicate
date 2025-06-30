@@ -10,6 +10,8 @@ import { CreatePatients } from "../pages/create-patients";
 import { PatientDetail } from "../pages/patient-detail";
 import { Analyses } from "../pages/analyses";
 import { LaboratoryTestTube } from "../pages/laboratory-test-tube";
+import { Organization } from "../pages/directories/organization";
+import { Biomaterials } from "../pages/directories/biomaterials";
 
 interface Type {
     id: string,
@@ -91,5 +93,30 @@ export const Router: Type[] = [
         id: nanoid(),
         path: "/cashier/patients",
         component: Patients
-    }
+    },
+    {
+        id: nanoid(),
+        path: "/references/organizations",
+        component: Organization
+    },
+    {
+        id: nanoid(),
+        path: "/references/biomaterials",
+        component: Biomaterials
+    },
+    {
+        id: nanoid(),
+        path: "/references/result-measurements",
+        component: Organization
+    },
+    {
+        id: nanoid(),
+        path: "/references/measurements",
+        component: Organization
+    },
+    {
+        id: nanoid(),
+        path: "/references/loinc",
+        component: Organization
+    },
 ]

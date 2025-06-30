@@ -29,6 +29,16 @@ export interface BiomaterialType {
   status: string;
 }
 
+export interface BiomaterialRequestT {
+  nameUz: string;
+  nameRu: string;
+}
+
+export interface BiomaterialUpdateT {
+  id: number;
+  data: BiomaterialRequestT;
+};
+
 export interface ApplicationType {
   id: number;
   nameUz: string;
@@ -126,65 +136,65 @@ export interface AnalyseSendDetails {
 }
 
 export interface AnalyseListT {
-  createdDate: string
-  updatedDate: number
-  id: number
-  personalDataIssuedDate: any
-  analyseNameOfLoinc: string
-  analyseCodeOfLoinc: string
-  resultAnalyse?: string
-  status: string
-  fundingStatus: string
-  initialConclusion: string
-  analyseDetails: AnalyseDetails
-  analyseSendDetails: AnalyseSendDetails
-  applicationType: ApplicationType
-  analyseContractDetails: any
-  analyseResultDetails: any
-  userId: number
-  file: any
-  analyseAnswerFile: any
-  moduleName: any
-  analysisUuid: any
-  isRetest?: boolean
-  aiAnswer: any
+  createdDate: string;
+  updatedDate: number;
+  id: number;
+  personalDataIssuedDate: any;
+  analyseNameOfLoinc: string;
+  analyseCodeOfLoinc: string;
+  resultAnalyse?: string;
+  status: string;
+  fundingStatus: string;
+  initialConclusion: string;
+  analyseDetails: AnalyseDetails;
+  analyseSendDetails: AnalyseSendDetails;
+  applicationType: ApplicationType;
+  analyseContractDetails: any;
+  analyseResultDetails: any;
+  userId: number;
+  file: any;
+  analyseAnswerFile: any;
+  moduleName: any;
+  analysisUuid: any;
+  isRetest?: boolean;
+  aiAnswer: any;
 }
 
 export interface AnalyseDetails {
-  id: number
-  analyseType: AnalyseType
-  measurementUnit: BiomaterialType
-  resultMeasurementUnit: any
-  typeBiomaterial: BiomaterialType
-  analyseDangerLevel: any
-  executionPriority: string
-  analyseMethodType: any
-  takenDate: any
-  issuedDate: any
-  analyseFile: any
-  answerDate: any
-  comment?: string
-  internalNumber: any
-  fullNameRegistrar?: string
-  fullNameNurse: any
-  fullNameCashier: any
-  fullNameOfLabrant: any
-  fullNameOfAffirmator: any
-  storePlace: any
-  sampleStoreDate: any
-  labrantComment: any
+  id: number;
+  analyseType: AnalyseType;
+  measurementUnit: BiomaterialType;
+  resultMeasurementUnit: any;
+  typeBiomaterial: BiomaterialType;
+  analyseDangerLevel: any;
+  executionPriority: string;
+  analyseMethodType: any;
+  takenDate: any;
+  issuedDate: any;
+  analyseFile: any;
+  answerDate: any;
+  comment?: string;
+  internalNumber: any;
+  fullNameRegistrar?: string;
+  fullNameNurse: any;
+  fullNameCashier: any;
+  fullNameOfLabrant: any;
+  fullNameOfAffirmator: any;
+  storePlace: any;
+  sampleStoreDate: any;
+  labrantComment: any;
 }
 
 export interface AnalyseType {
-  createdDate: string
-  updatedDate: number
-  id: number
-  nameUz: string
-  nameRu: string
-  status: string
-  investigationType: any
-  viewType: any
-  typeBiomaterial: any
+  createdDate: string;
+  updatedDate: number;
+  id: number;
+  nameUz: string;
+  nameRu: string;
+  status: string;
+  investigationType: any;
+  viewType: any;
+  typeBiomaterial: any;
 }
 
 export interface CreateInteriorNumberArgs {
