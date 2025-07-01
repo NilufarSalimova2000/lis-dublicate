@@ -3,27 +3,27 @@ import { MenuIcon, Eye, Trash2, Pencil } from "lucide-react";
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { ReusableMenu } from "../../../../ui/menu";
 import { ReusableDialog } from "../../../../ui/dialog";
-import { BiomaterialType } from "../../../../shared/types/analyse";
+import { ResMeasurUnitT } from "../../../../shared/types/result-measurement-unit";
 
-interface ColumnsBiomaterialProps {
+interface ColumnsProps {
   anchorEl: HTMLElement | null;
   menuRowId: number | null;
   handleOpenMenu: (event: React.MouseEvent<HTMLElement>, id: number) => void;
   handleCloseMenu: () => void;
-  handleViewClick: (row: BiomaterialType) => void;
+  handleViewClick: (row: ResMeasurUnitT) => void;
   openView: boolean;
-  selectedRow: BiomaterialType | null;
+  selectedRow: ResMeasurUnitT | null;
   handleCloseView: () => void;
   openDelete: boolean;
-  selectedDeleteRow: BiomaterialType | null;
+  selectedDeleteRow: ResMeasurUnitT | null;
   handleCloseDelete: () => void;
   handleDeleteConfirm: () => void;
-  setSelectedDeleteRow: (row: BiomaterialType) => void;
+  setSelectedDeleteRow: (row: ResMeasurUnitT) => void;
   openDeleteDialog: () => void;
-  handleEditClick: (row: BiomaterialType) => void;
+  handleEditClick: (row: ResMeasurUnitT) => void;
 }
 
-export const columnsBiomaterial = ({
+export const columnsMeasurRes = ({
   anchorEl,
   menuRowId,
   handleOpenMenu,
@@ -39,29 +39,36 @@ export const columnsBiomaterial = ({
   setSelectedDeleteRow,
   openDeleteDialog,
   handleEditClick
-}: ColumnsBiomaterialProps): GridColDef<BiomaterialType>[] => {
+}: ColumnsProps): GridColDef<ResMeasurUnitT>[] => {
   return [
     {
       field: "id",
       headerName: "№",
       width: 70,
-      renderCell: (params: GridRenderCellParams<BiomaterialType>) =>
+      renderCell: (params: GridRenderCellParams<ResMeasurUnitT>) =>
         params.api.getRowIndexRelativeToVisibleRows(params.id) + 1,
     },
     {
       field: "nameRu",
       headerName: "Name (Ru)",
       flex: 1,
-      renderCell: (params: GridRenderCellParams<BiomaterialType>) =>
+      renderCell: (params: GridRenderCellParams<ResMeasurUnitT>) =>
         params.value || "—",
     },
     {
       field: "nameUz",
       headerName: "Name (Uz)",
       flex: 1,
-      renderCell: (params: GridRenderCellParams<BiomaterialType>) =>
+      renderCell: (params: GridRenderCellParams<ResMeasurUnitT>) =>
         params.value || "—",
     },
+    {
+        field: "resultType",
+        headerName: "Result type",
+        flex: 1,
+        renderCell: (params: GridRenderCellParams<ResMeasurUnitT>) =>
+          params.value || "—",
+      },
     {
       field: "actions",
       headerName: "Menu",
@@ -69,7 +76,7 @@ export const columnsBiomaterial = ({
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      renderCell: (params: GridRenderCellParams<BiomaterialType>) => {
+      renderCell: (params: GridRenderCellParams<ResMeasurUnitT>) => {
         const row = params.row;
 
         const menuItems = [

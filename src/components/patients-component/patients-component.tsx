@@ -176,7 +176,7 @@ export const PatientsComponent = () => {
               sx={{ display: { xs: "none", sm: "block" } }}
               variant="contained"
             >
-              + Add
+              + Registration
             </Button>
 
             <IconButton

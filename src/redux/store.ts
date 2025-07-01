@@ -14,6 +14,7 @@ import { WarehouseService } from "./services/lis/warehouse";
 import { NurseTestService } from "./services/lis/nurse-test-tube";
 import { LabrantTestTubeService } from "./services/lis/labrant-test-tube";
 import { BiomaterialService } from "./services/lis/analyse/biomaterials";
+import { ResMeasurUnitService } from "./services/lis/result-mesurement-unit";
 
 export const store = configureStore({
   reducer: {
@@ -29,7 +30,8 @@ export const store = configureStore({
     [BiomaterialService.reducerPath]: BiomaterialService.reducer,
     [WarehouseService.reducerPath]: WarehouseService.reducer,
     [NurseTestService.reducerPath]: NurseTestService.reducer,
-    [LabrantTestTubeService.reducerPath]: LabrantTestTubeService.reducer
+    [LabrantTestTubeService.reducerPath]: LabrantTestTubeService.reducer,
+    [ResMeasurUnitService.reducerPath]: ResMeasurUnitService.reducer
   },
   preloadedState: {
     crud: loadState("users"),
@@ -47,7 +49,8 @@ export const store = configureStore({
       BiomaterialService.middleware,
       WarehouseService.middleware,
       NurseTestService.middleware,
-      LabrantTestTubeService.middleware
+      LabrantTestTubeService.middleware,
+      ResMeasurUnitService.middleware
     ),
 });
 

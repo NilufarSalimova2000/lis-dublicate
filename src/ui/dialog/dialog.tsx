@@ -54,7 +54,7 @@ export const ReusableDialog = ({
           {showConfirmButton && (
             <Button
               onClick={onConfirm}
-              color="error"
+              // color="error"
               variant="contained"
               autoFocus
             >
