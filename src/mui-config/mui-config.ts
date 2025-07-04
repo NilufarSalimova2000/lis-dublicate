@@ -86,6 +86,9 @@ export const theme = createTheme({
           "& .MuiOutlinedInput-notchedOutline": {
             border: "none",
           },
+          "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+            border: `1px solid ${colors.primary}`,
+          },
           maxWidth: "100%",
         },
       },

@@ -1,18 +1,13 @@
-import {
-  Box,
-  CircularProgress,
-  InputAdornment,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, CircularProgress, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useGetUsersMutation } from "../../redux/services/lis/users";
 import { Table } from "../../ui/table";
 import { columnsUser } from "./models/columns";
 import { organizationId } from "../../shared/constants";
 import { colors } from "../../mui-config/colors";
-import { Search } from "lucide-react";
 import { useToggle } from "../../hooks/useToggle";
+import { useDebounce } from "../../hooks/useDebounce";
+import { SearchInput } from "../../components/search-input";
 
 export const Users = () => {
   const [page, setPage] = useState(0);
@@ -21,6 +16,8 @@ export const Users = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const debouncedSearch = useDebounce(searchValue, 500);
 
   const [getUsers, { data, isLoading, error }] = useGetUsersMutation();
 
@@ -30,10 +27,10 @@ export const Users = () => {
         orgId: organizationId,
         page,
         limit,
-        search: { value: "" },
+        search: { value: debouncedSearch },
       });
     }
-  }, [getUsers, organizationId, page, limit]);
+  }, [getUsers, organizationId, page, limit, debouncedSearch]);
 
   const {
     open: openView,
@@ -97,40 +94,10 @@ export const Users = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <TextField
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            sx={{ maxWidth: "224px" }}
-            size="small"
-            placeholder="Search"
+          <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
           />
-          {/* <Link style={{ textDecoration: "none" }} to={"/create"}>
-            <Button
-              sx={{ display: { xs: "none", sm: "block" } }}
-              variant="contained"
-            >
-              + Add
-            </Button>
-
-            <IconButton
-              sx={{
-                display: { xs: "flex", sm: "none" },
-                bgcolor: `${colors.primary}`,
-                width: "30px",
-                height: "30px",
-                borderRadius: "10px",
-              }}
-            >
-              +
-            </IconButton>
-          </Link> */}
         </Stack>
         <Table
           columns={columns}

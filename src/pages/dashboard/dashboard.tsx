@@ -1,16 +1,8 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, Button, IconButton, Stack } from "@mui/material";
 import { colors } from "../../mui-config/colors";
 import { Table } from "../../ui/table";
 import { dashboardColumns } from "./models/columns";
 import { Link } from "react-router-dom";
-import { Search } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useState } from "react";
@@ -120,20 +112,6 @@ export const Dashboard = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <TextField
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            sx={{ maxWidth: "224px" }}
-            size="small"
-            placeholder="Search"
-          />
           <Link style={{ textDecoration: "none" }} to={"/create"}>
             <Button
               sx={{ display: { xs: "none", sm: "block" } }}

@@ -6,6 +6,8 @@ import { Table } from "../../ui/table";
 import { colors } from "../../mui-config/colors";
 import { useGetWarehousesMutation } from "../../redux/services/lis/warehouse";
 import { columnsWarehouse } from "./models/columns";
+import { useDebounce } from "../../hooks/useDebounce";
+import { SearchInput } from "../../components/search-input";
 
 export const Warehouse = () => {
   const [page, setPage] = useState(0);
@@ -13,6 +15,9 @@ export const Warehouse = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const debouncedSearch = useDebounce(searchValue, 500);
+
   const [getWarehouses, { data, isLoading, error }] =
     useGetWarehousesMutation();
 
@@ -22,10 +27,10 @@ export const Warehouse = () => {
         orgId: organizationId,
         page,
         limit,
-        search: { value: "" },
+        search: { value: debouncedSearch },
       });
     }
-  }, [getWarehouses, organizationId, page, limit]);
+  }, [getWarehouses, organizationId, page, limit, debouncedSearch]);
 
   const {
     open: openView,
@@ -83,6 +88,17 @@ export const Warehouse = () => {
   return (
     <Box padding={{ sm: "0 28px 28px 28px", xs: "0 16px 16px 16px" }}>
       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"} padding={"16px"}>
+        <Stack
+          marginBottom={"20px"}
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </Stack>
         <Table
           columns={columns}
           rows={data?.data?.list || []}

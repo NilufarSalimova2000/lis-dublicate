@@ -3,21 +3,29 @@ import {
   Button,
   CircularProgress,
   IconButton,
-  InputAdornment,
   Stack,
   TextField,
 } from "@mui/material";
 import { useState } from "react";
 import { colors } from "../../../mui-config/colors";
-import { Search } from "lucide-react";
 import { Table } from "../../../ui/table";
 import { ReusableDialog } from "../../../ui/dialog";
 import { useToggle } from "../../../hooks/useToggle";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { columnsBiomaterial } from "../biomaterials/models/columns";
-import { useCreateMeasurementUnitMutation, useDeleteMeasurementUnitMutation, useEditMeasurementUnitMutation, useGetMeasurementUnitQuery } from "../../../redux/services/lis/measurement-unit";
-import { BiomaterialRequestT, BiomaterialType } from "../../../shared/types/analyse";
+import {
+  useCreateMeasurementUnitMutation,
+  useDeleteMeasurementUnitMutation,
+  useEditMeasurementUnitMutation,
+  useGetMeasurementUnitQuery,
+} from "../../../redux/services/lis/measurement-unit";
+import {
+  BiomaterialRequestT,
+  BiomaterialType,
+} from "../../../shared/types/analyse";
+import { useDebounce } from "../../../hooks/useDebounce";
+import { SearchInput } from "../../../components/search-input";
 
 export const UnitsMeasurement = () => {
   const [page, setPage] = useState(0);
@@ -25,10 +33,13 @@ export const UnitsMeasurement = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<BiomaterialType | null>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const debouncedSearch = useDebounce(searchValue, 500);
+
   const { data, isLoading, error, refetch } = useGetMeasurementUnitQuery({
     page,
     limit,
-    search: { value: "" },
+    search: { value: debouncedSearch },
   });
 
   const [deleteMeasurUnit] = useDeleteMeasurementUnitMutation();
@@ -71,7 +82,8 @@ export const UnitsMeasurement = () => {
     setSelectedRow(null);
   };
 
-  const [create, { isLoading: isCreating }] = useCreateMeasurementUnitMutation();
+  const [create, { isLoading: isCreating }] =
+    useCreateMeasurementUnitMutation();
 
   const {
     register,
@@ -175,19 +187,9 @@ export const UnitsMeasurement = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <TextField
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            sx={{ maxWidth: "224px" }}
-            size="small"
-            placeholder="Search"
+          <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
           />
           <Button
             sx={{ display: { xs: "none", sm: "block" } }}

@@ -3,7 +3,6 @@ import {
   Button,
   CircularProgress,
   IconButton,
-  InputAdornment,
   MenuItem,
   Stack,
   TextField,
@@ -14,7 +13,6 @@ import {
   ResMeasurUnitT,
 } from "../../../shared/types/result-measurement-unit";
 import { colors } from "../../../mui-config/colors";
-import { Search } from "lucide-react";
 import { Table } from "../../../ui/table";
 import { ReusableDialog } from "../../../ui/dialog";
 import { columnsMeasurRes } from "./models/columns";
@@ -27,6 +25,8 @@ import {
   useEditResMeasurMutation,
   useGetResMeasurQuery,
 } from "../../../redux/services/lis/result-mesurement-unit";
+import { useDebounce } from "../../../hooks/useDebounce";
+import { SearchInput } from "../../../components/search-input";
 
 export const MeasurementResult = () => {
   const [page, setPage] = useState(0);
@@ -34,10 +34,13 @@ export const MeasurementResult = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<ResMeasurUnitT | null>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const debouncedSearch = useDebounce(searchValue, 500);
+
   const { data, isLoading, error, refetch } = useGetResMeasurQuery({
     page,
     limit,
-    search: { value: "" },
+    search: { value: debouncedSearch },
   });
 
   const [deleteMeasurRes] = useDeleteResMeasurMutation();
@@ -99,7 +102,7 @@ export const MeasurementResult = () => {
     openAdd();
     setValue("nameUz", row.nameUz);
     setValue("nameRu", row.nameRu);
-    setValue("resultType", row.resultType)
+    setValue("resultType", row.resultType);
   };
 
   const onSubmit = async (values: ResMeasurUnitRequestT) => {
@@ -188,19 +191,9 @@ export const MeasurementResult = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <TextField
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            sx={{ maxWidth: "224px" }}
-            size="small"
-            placeholder="Search"
+          <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
           />
           <Button
             sx={{ display: { xs: "none", sm: "block" } }}

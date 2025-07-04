@@ -3,7 +3,6 @@ import {
   Button,
   CircularProgress,
   IconButton,
-  InputAdornment,
   Stack,
   TextField,
   Typography,
@@ -14,7 +13,6 @@ import { organizationId } from "../../shared/constants";
 import { useToggle } from "../../hooks/useToggle";
 import { columnsPatient } from "./models/columns";
 import { Table } from "../../ui/table";
-import { Search } from "lucide-react";
 import { colors } from "../../mui-config/colors";
 import { Link, useNavigate } from "react-router-dom";
 import { ReusableDialog } from "../../ui/dialog";
@@ -24,6 +22,8 @@ import { toast } from "react-toastify";
 import { useCreateInteriorNumberMutation } from "../../redux/services/lis/analyse";
 import { useForm } from "react-hook-form";
 import Barcode from "react-barcode";
+import { useDebounce } from "../../hooks/useDebounce";
+import { SearchInput } from "../search-input";
 
 interface InteriorNumberFormValues {
   number: string;
@@ -37,6 +37,8 @@ export const PatientsComponent = () => {
   const [getPatients, { data, isLoading, error }] = useGetPatientsMutation();
   const [selectedRows, setSelectedRows] = useState<UsersType[]>([]);
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState<string>("");
+  const debouncedSearch = useDebounce(searchValue, 500);
 
   useEffect(() => {
     if (organizationId !== null) {
@@ -44,10 +46,10 @@ export const PatientsComponent = () => {
         orgId: organizationId,
         page,
         limit,
-        search: { value: "" },
+        search: { value: debouncedSearch },
       });
     }
-  }, [getPatients, organizationId, page, limit]);
+  }, [getPatients, organizationId, page, limit, debouncedSearch]);
 
   const {
     open: isNurseSheetOpen,
@@ -151,19 +153,9 @@ export const PatientsComponent = () => {
           alignItems={"center"}
         >
           <Stack direction={"row"} gap={"20px"}>
-            <TextField
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Search />
-                    </InputAdornment>
-                  ),
-                },
-              }}
-              sx={{ maxWidth: "224px" }}
-              size="small"
-              placeholder="Search"
+            <SearchInput
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
             />
             {selectedRows.length > 0 && (
               <Button onClick={openNurseSheetModal} variant="outlined">

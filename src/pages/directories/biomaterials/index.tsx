@@ -3,7 +3,6 @@ import {
   Button,
   CircularProgress,
   IconButton,
-  InputAdornment,
   Stack,
   TextField,
 } from "@mui/material";
@@ -16,7 +15,6 @@ import {
   BiomaterialType,
 } from "../../../shared/types/analyse";
 import { columnsBiomaterial } from "./models/columns";
-import { Search } from "lucide-react";
 import { ReusableDialog } from "../../../ui/dialog";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -26,6 +24,8 @@ import {
   useEditBiomaterialMutation,
   useGetBiomaterialQuery,
 } from "../../../redux/services/lis/analyse/biomaterials";
+import { useDebounce } from "../../../hooks/useDebounce";
+import { SearchInput } from "../../../components/search-input";
 
 export const Biomaterials = () => {
   const [page, setPage] = useState(0);
@@ -33,10 +33,13 @@ export const Biomaterials = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<BiomaterialType | null>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const debouncedSearch = useDebounce(searchValue, 500);
+
   const { data, isLoading, error, refetch } = useGetBiomaterialQuery({
     page,
     limit,
-    search: { value: "" },
+    search: { value: debouncedSearch },
   });
   const [deleteBiomaterial] = useDeleteBiomaterialMutation();
   const [isEditMode, setIsEditMode] = useState(false);
@@ -183,19 +186,9 @@ export const Biomaterials = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <TextField
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            sx={{ maxWidth: "224px" }}
-            size="small"
-            placeholder="Search"
+          <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
           />
           <Button
             sx={{ display: { xs: "none", sm: "block" } }}

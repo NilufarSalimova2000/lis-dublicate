@@ -13,6 +13,8 @@ import { ReusableDialog } from "../../ui/dialog";
 import { PatientsModalTable } from "../../components/patient-modal-table";
 import { NurseTestTubeType } from "../../shared/types/users/nurse-test-tube";
 import { toast } from "react-toastify";
+import { useDebounce } from "../../hooks/useDebounce";
+import { SearchInput } from "../../components/search-input";
 
 export const Worksheets = () => {
   const [page, setPage] = useState(0);
@@ -23,6 +25,8 @@ export const Worksheets = () => {
   const [getPatients, { data, isLoading, error }] =
     useGetNurseTestTubeMutation();
   const [deleteNurseTestTube] = useDeleteNurseTestTubeMutation();
+  const [searchValue, setSearchValue] = useState<string>("");
+  const debouncedSearch = useDebounce(searchValue, 500);
 
   useEffect(() => {
     if (organizationId !== null) {
@@ -30,10 +34,10 @@ export const Worksheets = () => {
         orgId: organizationId,
         page,
         limit,
-        search: { value: "" },
+        search: { value: debouncedSearch },
       });
     }
-  }, [getPatients, organizationId, page, limit]);
+  }, [getPatients, organizationId, page, limit, debouncedSearch]);
 
   const {
     open: openView,
@@ -139,6 +143,17 @@ export const Worksheets = () => {
   return (
     <Box padding={{ sm: "0 28px 28px 28px", xs: "0 16px 16px 16px" }}>
       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"} padding={"16px"}>
+        <Stack
+          marginBottom={"20px"}
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </Stack>
         <Table
           columns={columns}
           rows={data?.data?.list || []}

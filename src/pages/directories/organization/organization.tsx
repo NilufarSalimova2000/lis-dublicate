@@ -6,6 +6,8 @@ import { useToggle } from "../../../hooks/useToggle";
 import { columnsOrganization } from "./models/columns";
 import { Table } from "../../../ui/table";
 import { colors } from "../../../mui-config/colors";
+import { useDebounce } from "../../../hooks/useDebounce";
+import { SearchInput } from "../../../components/search-input";
 
 export const Organization = () => {
   const [page, setPage] = useState(0);
@@ -13,6 +15,9 @@ export const Organization = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<IOrganization | null>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const debouncedSearch = useDebounce(searchValue, 500);
+
   const [getOrganization, { data, isLoading, error }] =
     useGetOrganizationMutation();
 
@@ -20,9 +25,9 @@ export const Organization = () => {
     getOrganization({
       page,
       limit,
-      search: { value: "" },
+      search: { value: debouncedSearch },
     });
-  }, [getOrganization, page, limit]);
+  }, [getOrganization, page, limit, debouncedSearch]);
 
   const {
     open: openView,
@@ -80,6 +85,17 @@ export const Organization = () => {
   return (
     <Box padding={{ sm: "0 28px 28px 28px", xs: "0 16px 16px 16px" }}>
       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"} padding={"16px"}>
+        <Stack
+          marginBottom={"20px"}
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </Stack>
         <Table
           columns={columns}
           rows={data?.data?.list || []}

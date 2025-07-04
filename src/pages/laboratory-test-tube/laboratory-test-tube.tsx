@@ -10,6 +10,8 @@ import {
 } from "../../redux/services/lis/labrant-test-tube";
 import { LabrantTestTubeT } from "../../shared/types/labrant-test-tube";
 import { toast } from "react-toastify";
+import { useDebounce } from "../../hooks/useDebounce";
+import { SearchInput } from "../../components/search-input";
 
 export const LaboratoryTestTube = () => {
   const [page, setPage] = useState(0);
@@ -17,10 +19,13 @@ export const LaboratoryTestTube = () => {
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const debouncedSearch = useDebounce(searchValue, 500);
+
   const { data, isLoading, error, refetch } = useGetLabrantTestTubeQuery({
     page,
     limit,
-    search: { value: "" },
+    search: { value: debouncedSearch },
   });
   const [deleteLabrantTestTube] = useDeleteLabrantTestTubeMutation();
 
@@ -112,6 +117,17 @@ export const LaboratoryTestTube = () => {
   return (
     <Box padding={{ sm: "0 28px 28px 28px", xs: "0 16px 16px 16px" }}>
       <Stack bgcolor={colors.pureWhite} borderRadius={"16px"} padding={"16px"}>
+        <Stack
+          marginBottom={"20px"}
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <SearchInput
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </Stack>
         <Table
           columns={columns}
           rows={data?.data?.list || []}
