@@ -46,17 +46,6 @@ export const AnalyseService = createApi({
       }),
     }),
 
-    getMeasurementUnit: builder.query<
-      IBaseResponse<BiomaterialType>,
-      IPagination
-    >({
-      query: ({ ...data }) => ({
-        url: `/measurement-unit/list-search`,
-        method: "POST",
-        body: { ...data },
-      }),
-    }),
-
     getApplication: builder.query<IBaseResponse<ApplicationType>, IPagination>({
       query: ({ ...data }) => ({
         url: `/application-type/list-search`,
@@ -125,7 +114,6 @@ export const {
   useGetAnalyseQuery,
   useGetApplicationQuery,
   useGetLoincQuery,
-  useGetMeasurementUnitQuery,
   useGetPatientAnalyseMutation,
   useCreateInteriorNumberMutation,
   useGetAnalysePatientQuery,

@@ -4,45 +4,36 @@ import {
   CircularProgress,
   IconButton,
   InputAdornment,
-  MenuItem,
   Stack,
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import {
-  ResMeasurUnitRequestT,
-  ResMeasurUnitT,
-} from "../../../shared/types/result-measurement-unit";
 import { colors } from "../../../mui-config/colors";
 import { Search } from "lucide-react";
 import { Table } from "../../../ui/table";
 import { ReusableDialog } from "../../../ui/dialog";
-import { columnsMeasurRes } from "./models/columns";
 import { useToggle } from "../../../hooks/useToggle";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import {
-  useCreateResMeasurMutation,
-  useDeleteResMeasurMutation,
-  useEditResMeasurMutation,
-  useGetResMeasurQuery,
-} from "../../../redux/services/lis/result-mesurement-unit";
+import { columnsBiomaterial } from "../biomaterials/models/columns";
+import { useCreateMeasurementUnitMutation, useDeleteMeasurementUnitMutation, useEditMeasurementUnitMutation, useGetMeasurementUnitQuery } from "../../../redux/services/lis/measurement-unit";
+import { BiomaterialRequestT, BiomaterialType } from "../../../shared/types/analyse";
 
-export const MeasurementResult = () => {
+export const UnitsMeasurement = () => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(10);
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
-  const [selectedRow, setSelectedRow] = useState<ResMeasurUnitT | null>(null);
+  const [selectedRow, setSelectedRow] = useState<BiomaterialType | null>(null);
   const [menuRowId, setMenuRowId] = useState<number | null>(null);
-  const { data, isLoading, error, refetch } = useGetResMeasurQuery({
+  const { data, isLoading, error, refetch } = useGetMeasurementUnitQuery({
     page,
     limit,
     search: { value: "" },
   });
 
-  const [deleteMeasurRes] = useDeleteResMeasurMutation();
+  const [deleteMeasurUnit] = useDeleteMeasurementUnitMutation();
   const [isEditMode, setIsEditMode] = useState(false);
-  const [edit] = useEditResMeasurMutation();
+  const [edit] = useEditMeasurementUnitMutation();
 
   const {
     open: openAddDialog,
@@ -69,7 +60,7 @@ export const MeasurementResult = () => {
     setMenuRowId(null);
   };
 
-  const handleViewClick = (row: ResMeasurUnitT) => {
+  const handleViewClick = (row: BiomaterialType) => {
     setSelectedRow(row);
     openViewDialog();
     handleCloseMenu();
@@ -80,29 +71,25 @@ export const MeasurementResult = () => {
     setSelectedRow(null);
   };
 
-  const [create, { isLoading: isCreating }] = useCreateResMeasurMutation();
+  const [create, { isLoading: isCreating }] = useCreateMeasurementUnitMutation();
 
   const {
     register,
     handleSubmit,
     reset,
     setValue,
-    watch,
     formState: { errors },
-  } = useForm<ResMeasurUnitRequestT>();
+  } = useForm<BiomaterialRequestT>();
 
-  const resultTypeValue = watch("resultType");
-
-  const handleEditClick = (row: ResMeasurUnitT) => {
+  const handleEditClick = (row: BiomaterialType) => {
     setIsEditMode(true);
     setSelectedRow(row);
     openAdd();
     setValue("nameUz", row.nameUz);
     setValue("nameRu", row.nameRu);
-    setValue("resultType", row.resultType)
   };
 
-  const onSubmit = async (values: ResMeasurUnitRequestT) => {
+  const onSubmit = async (values: BiomaterialRequestT) => {
     try {
       if (isEditMode && selectedRow?.id) {
         await edit({ id: selectedRow.id, data: values }).unwrap();
@@ -130,13 +117,13 @@ export const MeasurementResult = () => {
   } = useToggle();
 
   const [selectedDeleteRow, setSelectedDeleteRow] =
-    useState<ResMeasurUnitT | null>(null);
+    useState<BiomaterialType | null>(null);
 
   const handleDeleteConfirm = async () => {
     if (!selectedDeleteRow) return;
 
     try {
-      await deleteMeasurRes(selectedDeleteRow.id).unwrap();
+      await deleteMeasurUnit(selectedDeleteRow.id).unwrap();
 
       toast.success("Muvaffaqiyatli o‘chirildi");
 
@@ -149,7 +136,7 @@ export const MeasurementResult = () => {
     }
   };
 
-  const columns = columnsMeasurRes({
+  const columns = columnsBiomaterial({
     anchorEl: menuAnchorEl,
     menuRowId,
     handleOpenMenu,
@@ -263,24 +250,6 @@ export const MeasurementResult = () => {
               error={!!errors.nameRu}
               helperText={errors.nameRu?.message}
             />
-            <TextField
-              label="Result type"
-              value={resultTypeValue || ""}
-              fullWidth
-              select
-              defaultValue=""
-              {...register("resultType", { required: "Majburiy tanlov" })}
-              error={!!errors.resultType}
-              helperText={errors.resultType?.message}
-            >
-              <MenuItem value="" disabled>
-                Tanlang
-              </MenuItem>
-              <MenuItem value="ENUM">ENUM</MenuItem>
-              <MenuItem value="TEXT">TEXT</MenuItem>
-              <MenuItem value="BOOLEAN">BOOLEAN</MenuItem>
-              <MenuItem value="NUMERIC">NUMERIC</MenuItem>
-            </TextField>
           </Stack>
         }
       />

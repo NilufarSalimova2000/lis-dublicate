@@ -13,6 +13,7 @@ import { LaboratoryTestTube } from "../pages/laboratory-test-tube";
 import { Organization } from "../pages/directories/organization";
 import { Biomaterials } from "../pages/directories/biomaterials";
 import { MeasurementResult } from "../pages/directories/measurement-result";
+import { UnitsMeasurement } from "../pages/directories/units-measurement";
 
 interface Type {
     id: string,
@@ -113,7 +114,7 @@ export const Router: Type[] = [
     {
         id: nanoid(),
         path: "/references/measurements",
-        component: Organization
+        component: UnitsMeasurement
     },
     {
         id: nanoid(),

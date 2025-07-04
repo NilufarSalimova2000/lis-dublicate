@@ -12,6 +12,7 @@ import {
 } from "../../redux/services/lis/analyse";
 import { colors } from "../../mui-config/colors";
 import { BiomaterialService } from "../../redux/services/lis/analyse/biomaterials";
+import { MeasurementUnitService } from "../../redux/services/lis/measurement-unit";
 
 export type TAnalyseCreateForm = Omit<
   AnalyseCreateT,
@@ -112,11 +113,12 @@ export const CreatePatients = () => {
 
   const analyseList = analyseListR?.data.list ?? [];
 
-  const { data: meaUnitListR } = AnalyseService.useGetMeasurementUnitQuery({
-    page: 0,
-    limit: 100,
-    search: { value: "" },
-  });
+  const { data: meaUnitListR } =
+    MeasurementUnitService.useGetMeasurementUnitQuery({
+      page: 0,
+      limit: 100,
+      search: { value: "" },
+    });
 
   const meaUnitList = meaUnitListR?.data.list ?? [];
 
