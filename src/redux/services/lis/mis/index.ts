@@ -6,8 +6,8 @@ export const MisService = createApi({
   reducerPath: "MisService",
   baseQuery: lisBaseQuery,
   endpoints: (builder) => ({
-    getCitizen: builder.query<CitizenRootT, { nnuzb: string; photo: string }>({
-      query: ({ nnuzb, photo }) => `/mis/Citizen?nnuzb=${nnuzb}&photo=${photo}`,
+    getCitizen: builder.query<CitizenRootT, { nnuzb: string; photo: string; birth_date: string }>({
+      query: ({ nnuzb, photo, birth_date }) => `/mis/Citizen?nnuzb=${nnuzb}&photo=${photo}&birth_date=${birth_date}`,
     }),
     getLegalEntity: builder.query<LegalRootT, { tin: string }>({
       query: ({ tin }) => `/mis/LegalEntity?tin=${tin}`,
